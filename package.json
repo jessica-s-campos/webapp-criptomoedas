@@ -1,0 +1,51 @@
+{
+  "name": "desafio",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@types/jest": "24.0.19",
+    "@types/node": "12.11.1",
+    "@types/react": "16.9.9",
+    "@types/react-dom": "16.9.2",
+    "bootstrap": "^4.3.1",
+    "jquery": "^3.4.1",
+    "pubsub-js": "^1.7.0",
+    "react": "^16.10.2",
+    "react-bootstrap": "^1.0.0-beta.14",
+    "react-dom": "^16.10.2",
+    "react-indexed-db": "^1.0.8",
+    "react-router": "^5.1.2",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "3.2.0",
+    "react-select": "^3.0.8",
+    "typescript": "3.6.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@types/jquery": "^3.3.31",
+    "@types/pubsub-js": "^1.5.18",
+    "@types/react-router": "^5.1.2",
+    "@types/react-router-dom": "^5.1.0",
+    "@types/react-select": "^3.0.5"
+  }
+}
