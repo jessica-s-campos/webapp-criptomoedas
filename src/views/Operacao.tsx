@@ -7,6 +7,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Movimentacao from '../models/Movimentacao';
@@ -18,7 +19,7 @@ import { Brita } from '../models/Brita';
 import Input from 'react-select/src/components/Input';
 
 export interface State{  
-    operacao : string;
+    operacao : Operacoes;
     criptomoeda1: CriptoMoeda;
     criptomoeda2: CriptoMoeda;
     valor : any;
@@ -55,6 +56,11 @@ export class Operacao extends React.Component<{}, State>{
     }
 
     setOperacao(o : any){           
+        if(o == Operacoes.Trocar){
+            //exibir as duas caixas de criptomoedas col-md-6
+        }else{
+            //exibir apenas uma caixa de criptomoeda col-md-12
+        }
         this.setState({operacao : o.target.value}); 
     }
 
@@ -101,10 +107,11 @@ export class Operacao extends React.Component<{}, State>{
     render() {
         
         return (<Container>
-            <Container>
-            <Container>
-          
-            <Form.Group as={Row} md="4">
+            
+            <Form>
+            <Row>
+            
+            <Col md="12">
                 <Form.Label>Operação</Form.Label>
                 <FormControl as="select" id="operacao" value={this.state.operacao} onChange={this.setOperacao.bind(this)}>
                     <option value={Operacoes.Comprar}>{Operacoes.Comprar}</option>
@@ -113,30 +120,11 @@ export class Operacao extends React.Component<{}, State>{
                 </FormControl>
                 <Form.Control.Feedback type="invalid">              
                 </Form.Control.Feedback>
-            </Form.Group>
-           
-            <Form.Group as={Row} md="4">
-                <Form.Label>CriptoMoeda1</Form.Label>                
-                <FormControl as="select" id="criptomoeda1" onChange={this.setCriptomoeda1.bind(this)}>
-                    <option value={Criptomoedas.Bitcoin} label={Criptomoedas.Bitcoin}></option>
-                    <option value={Criptomoedas.Bitcoin} label={Criptomoedas.Brita}></option>               
-                </FormControl>
-                <Form.Control.Feedback type="invalid">              
-                </Form.Control.Feedback>
-            </Form.Group>
-    
-            <Form.Group as={Row} md="4">
-                <Form.Label>CriptoMoeda2</Form.Label>
-                <FormControl as="select" id="criptomoeda2"
-                onChange={this.setCriptomoeda2.bind(this)}>
-                    <option value={Criptomoedas.Bitcoin} label={Criptomoedas.Bitcoin}></option>
-                    <option value={Criptomoedas.Bitcoin} label={Criptomoedas.Brita}></option>          
-                </FormControl>
-                <Form.Control.Feedback type="invalid">              
-                </Form.Control.Feedback>
-            </Form.Group>
-            
-            <InputGroup className="mb-3" >
+            </Col>
+
+            <Col md="12">
+            <Form.Label>Valor</Form.Label>
+            <InputGroup>
                 <InputGroup.Prepend>
                     <InputGroup.Text>R$</InputGroup.Text>
                 </InputGroup.Prepend>
@@ -145,13 +133,39 @@ export class Operacao extends React.Component<{}, State>{
                         <InputGroup.Text>.00</InputGroup.Text>
                     </InputGroup.Append>
             </InputGroup>
+            </Col>
+          
+            <Col md="6">
+                <Form.Label>CriptoMoeda1</Form.Label>                
+                <FormControl as="select" id="criptomoeda1" onChange={this.setCriptomoeda1.bind(this)}>
+                    <option value={Criptomoedas.Bitcoin} label={Criptomoedas.Bitcoin}></option>
+                    <option value={Criptomoedas.Bitcoin} label={Criptomoedas.Brita}></option>               
+                </FormControl>
+                <Form.Control.Feedback type="invalid">              
+                </Form.Control.Feedback>
+            </Col>
     
-            <Form.Group as={Row} md="4">
-                <Button variant="success" id="btn-ok" onClick={this.Adiciona}>OK</Button>
-            </Form.Group>
          
-            </Container>                           
-            </Container>                           
+            {/* Caso a operação seja troca exibir esse campo */}
+            <Col md="6">
+                <Form.Label>CriptoMoeda2</Form.Label>
+                <FormControl as="select" id="criptomoeda2"
+                onChange={this.setCriptomoeda2.bind(this)}>
+                    <option value={Criptomoedas.Bitcoin} label={Criptomoedas.Bitcoin}></option>
+                    <option value={Criptomoedas.Bitcoin} label={Criptomoedas.Brita}></option>          
+                </FormControl>
+                <Form.Control.Feedback type="invalid">              
+                </Form.Control.Feedback>
+            </Col>
+            
+           
+            <Col md="12">
+                <Button variant="success" id="btn-ok" onClick={this.Adiciona}>OK</Button>
+            </Col>
+            
+            </Row>
+            </Form>
+                                 
             </Container> )                                  
     }
 
