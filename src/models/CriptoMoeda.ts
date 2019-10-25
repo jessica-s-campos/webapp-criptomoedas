@@ -1,6 +1,6 @@
 import { ICotacao } from "./interfaces-api/Interfaces";
 
-export abstract class CriptoMoeda {
+export default abstract class CriptoMoeda {
 
     private saldo: number;
     protected cotacaoCompra: number;

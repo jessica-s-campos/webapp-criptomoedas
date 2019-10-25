@@ -1,17 +1,17 @@
-import { CriptoMoeda } from "./CriptoMoeda";
-import { ICotacao } from "./interfaces-api/Interfaces";
+import CriptoMoeda from "./CriptoMoeda";
+import { ICotacaoBitcoin } from "./interfaces-api/Interfaces";
 import { DateHelper } from "../helpers/DateHelper";
 
 export class Bitcoin extends CriptoMoeda {
 
     constructor(){
         super();
+        this.ObterCotacao(new Date());
     }
 
-    ObterCotacao(dataCotacao : Date) : Promise<ICotacao> {
-        const url = "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarDia(dataCotacao=@dataCotacao)?%40dataCotacao=%27"
-        +DateHelper.toDateCotacao(dataCotacao)
-        +"%27&%24format=json";
+    ObterCotacao(dataCotacao : Date) : Promise<ICotacaoBitcoin> {
+        const url = "https://www.mercadobitcoin.net/api/BTC/day-summary/"
+        +DateHelper.toDateCotacaoBitcoin(dataCotacao);
 
         return fetch(url)
         .then(res => res.json())   

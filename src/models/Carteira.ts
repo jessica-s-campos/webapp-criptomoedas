@@ -1,4 +1,4 @@
-import { CriptoMoeda } from "./CriptoMoeda";
+import  CriptoMoeda  from "./CriptoMoeda";
 import { Brita } from "./Brita";
 import { Bitcoin } from "./Bitcoin";
 

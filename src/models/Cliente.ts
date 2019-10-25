@@ -1,4 +1,3 @@
-import { CriptoMoeda } from "./CriptoMoeda";
 import { Carteira } from "./Carteira";
 
 export class Cliente{

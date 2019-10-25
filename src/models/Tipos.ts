@@ -1,12 +1,12 @@
 
 
 export enum Criptomoedas {
-  Bitcoin = "0",
-  Brita = "1"
+  Bitcoin = "Bitcoin",
+  Brita = "Brita"
 }
 
-  export enum Operacoes {
-    Comprar = "0",
-    Vender = "1",
-    Trocar = "2"
-  }
+export enum Operacoes {
+    Comprar = "Comprar",
+    Vender = "Vender",
+    Trocar = "Trocar"
+}

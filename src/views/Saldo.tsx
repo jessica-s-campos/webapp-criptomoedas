@@ -6,8 +6,18 @@ import Container from 'react-bootstrap/Container';
 import '../css/blog.css'
 import PubSub from 'pubsub-js'; 
 
-export class Saldo extends Component{
+export interface IState{
+    saldo_bitcoin : number,
+    saldo_brita : number,
+    saldo_dinheiro : number
+}
+
+export class Saldo extends Component<any, IState>{
   
+    constructor(props: any){
+        super(props);
+        this.state = { saldo_bitcoin : 0, saldo_brita : 0, saldo_dinheiro : 0 };
+    }
 
     componentDidMount(){        
 
