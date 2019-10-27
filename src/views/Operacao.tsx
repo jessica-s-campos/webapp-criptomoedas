@@ -16,7 +16,8 @@ import { AccessDB,useIndexedDB } from 'react-indexed-db';
 import CriptoMoeda from "../models/CriptoMoeda";
 import { Bitcoin } from '../models/Bitcoin';
 import { Brita } from '../models/Brita';
-import Input from 'react-select/src/components/Input';
+
+import { Cliente } from '../models/Cliente';
 
 export interface State{  
     operacao : Operacoes;
@@ -34,36 +35,11 @@ export class Operacao extends React.Component<{}, State>{
       
       
     Adiciona = () => {  
-
-        useIndexedDB('movimentacao')
-        .add({data : this.state.data, operacao : this.state.operacao, valor : this.state.valor, criptomoeda1 : this.state.criptomoeda1 , criptomoeda2 : this.state.criptomoeda2});
-       var mov = new Movimentacao(0,this.state.data, this.state.operacao, this.state.valor, this.state.criptomoeda1, this.state.criptomoeda2)
-        console.log(mov)
-        PubSub.publish("nova-operacao", 1)        
+        
+        var mov = new Movimentacao(this.state.operacao, this.state.valor, this.state.criptomoeda1, this.state.criptomoeda2)               
+        mov.RealizaMovimentacao(new Cliente(0,'Jéssica'))
     }
-  
-    // Adiciona = () => {  
-           
-    //     if(this.state.operacao == Operacoes.Trocar){
-    //         if(this.state.criptomoeda1 == this.state.criptomoeda2){
-    //             alert('Na operação de troca as moedas não podem ser iguais')
-    //             return;
-    //         }            
-    //     }
-
-    //     if(this.state.valor == 0 || this.state.valor < 0){
-    //         alert('O valor não foi informado ou é negativo.')
-    //         return;
-    //     }
-
-    //    console.log(this.state.criptomoeda1.ObterCotacao(new Date()))
-    //    console.log(this.state.criptomoeda2.ObterCotacao(new Date()))
-
-    //     var mov = new Movimentacao(this.state.data, this.state.operacao, this.state.valor, this.state.criptomoeda1,this.state.criptomoeda2)
-       
-    //     PubSub.publish("nova-operacao", 1)                    
-    // }
-
+    
     setOperacao(o : any){ 
         o.persist();          
         if(o == Operacoes.Trocar){

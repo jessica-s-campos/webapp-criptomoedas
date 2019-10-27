@@ -10,50 +10,50 @@ import Col from 'react-bootstrap/Col';
 import '../css/blog.css';
 import PubSub from 'pubsub-js'; 
 import { AccessDB,useIndexedDB } from 'react-indexed-db';
-import { Criptomoedas } from '../models/Tipos';
+import { Criptomoedas, Operacoes } from '../models/Tipos';
 import CriptoMoeda from '../models/CriptoMoeda';
 import { Bitcoin } from '../models/Bitcoin';
 import { Brita } from '../models/Brita';
+import FormControl from 'react-bootstrap/FormControl';
+import InputMask from 'react-input-mask';
+import Input from 'react-select/src/components/Input';
 
 class FiltroExtrato extends Component{
 
  
     state = {data: '' , operacao: ''}
    
-    Filtra(){
-      
+    Filtra = (o:any) => {
+        this.setState({operacao : o.target.value}); 
+        useIndexedDB('movimentacao').getAll().then( (mov:Array<Movimentacao>) => {
+            var array = mov.filter( o => o.operacao == this.state.operacao && o.data >= new Date(this.state.data))
+            PubSub.publish("grid-filtrado", array) 
+         });
     }
+   
 
     render() {
         return <Row>   
-           
-             <Form.Group as={Col} md="6">
-                <Form.Label>Data</Form.Label>
-                <Form.Control 
-                as="input" 
-                id="filtro-data" 
-                onChange={this.Filtra}
-                >                 
-                </Form.Control>
+            
+            <Col md="6">
+            <Form.Label>Data</Form.Label>
+                <FormControl as="input" id="data" value={this.state.data} onChange={this.Filtra.bind(this)}>
+                  
+                </FormControl>
                 <Form.Control.Feedback type="invalid">              
-                </Form.Control.Feedback>
-            </Form.Group>
-        
-            <Form.Group as={Col} md="6">
+                </Form.Control.Feedback>         
+            </Col>
+
+            <Col md="6">
                 <Form.Label>Operação</Form.Label>
-                <Form.Control 
-                as="select" 
-                id="filtro-operacao"
-               
-                onChange={this.Filtra}           
-                >
-                    <option>Comprar</option>
-                    <option>Vender</option>               
-                    <option>Trocar</option>               
-                </Form.Control>
+                <FormControl as="select" id="operacao" value={this.state.operacao} onChange={this.Filtra.bind(this)}>
+                    <option value={Operacoes.Comprar}>{Operacoes.Comprar}</option>
+                    <option value={Operacoes.Vender} >{Operacoes.Vender}</option>
+                    <option value={Operacoes.Trocar} >{Operacoes.Trocar}</option>         
+                </FormControl>
                 <Form.Control.Feedback type="invalid">              
                 </Form.Control.Feedback>
-            </Form.Group>
+            </Col>
            
         </Row>
     }
@@ -81,7 +81,7 @@ class GridExtrato extends Component<{lista: Array<Movimentacao>}>{
                         {                            
                             return (
                                
-                                <tr key={m.id}>
+                                <tr key={m.data.getMilliseconds()}>
                                 <td>{m.data.getDate()}/{m.data.getMonth() +1}/{m.data.getFullYear()}</td>
                                 <td>{m.operacao}</td>
                                 <td>{m.criptomoeda1 instanceof Bitcoin ? "Bitcoin" : "Brita"}</td>
@@ -115,11 +115,19 @@ export default class GridBox extends React.Component<any, IState>{
         this.state = { extrato: new Array<Movimentacao>() };
       }
        
-    componentDidMount(){                     
+    componentDidMount(){    
+        useIndexedDB('movimentacao').getAll().then( (mov:Array<Movimentacao>) => {
+            this.setState({extrato : mov})
+        });
+
         PubSub.subscribe('nova-operacao',(topis: any, data : any) => {  
             useIndexedDB('movimentacao').getAll().then( (mov:Array<Movimentacao>) => {
                 this.setState({extrato : mov})
             });
+        });
+
+        PubSub.subscribe('grid-filtrado',(topis: any, data : any) => {              
+            this.setState({extrato : data})            
         });
       }  
 

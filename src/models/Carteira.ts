@@ -16,6 +16,10 @@ export class Carteira {
         return this.dinheiro;
     }
 
+    setDinheiro(valor : number){
+        return this.dinheiro = this.dinheiro - valor;
+    }
+
     Comprar(valor : number, moeda : CriptoMoeda) : void {
         
     }

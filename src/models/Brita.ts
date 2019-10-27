@@ -23,7 +23,8 @@ export class Brita extends CriptoMoeda {
         .then(res => res.json())   
         
         .catch(err => {
-            throw new Error(err);              
+            alert("Houve algum problema ao consultar a cotação dessa moeda.");
+            console.log(err);        
         });     
     }
     

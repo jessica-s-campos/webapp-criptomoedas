@@ -13,5 +13,9 @@ export class Cliente{
     public getDinheiro(): number{
         return this.carteira.getDinheiro();
     }
+
+    public setDinheiro(valor : number){
+        this.carteira.setDinheiro(valor);
+    }
     
 }
