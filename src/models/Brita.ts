@@ -6,7 +6,11 @@ export class Brita extends CriptoMoeda {
         
     constructor(){
         super();
-        this.ObterCotacao(new Date());
+        this.ObterCotacao(new Date()).then((o : ICotacaoBrita) => {
+            console.log('then brita')
+            this.cotacaoCompra = o.cotacaoCompra;
+            this.cotacaoVenda = o.cotacaoVenda;
+        })
     }
 
     ObterCotacao(dataCotacao : Date) : Promise<ICotacaoBrita>{
@@ -17,7 +21,7 @@ export class Brita extends CriptoMoeda {
 
         return fetch(url)
         .then(res => res.json())   
-     
+        
         .catch(err => {
             throw new Error(err);              
         });     

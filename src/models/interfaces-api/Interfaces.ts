@@ -5,15 +5,13 @@ export interface ICotacaoBrita extends ICotacao {
 }
 
 export interface ICotacaoBitcoin extends ICotacao {
-    date: string,
-    opening: number,
-    closing: number,
-    lowest: number,
-    highest: number,
-    volume: number,
-    quantity: number,
-    amount: number,
-    avg_price: number    
+    high:string;
+    low: string;
+    vol: string;
+    last:string;
+    buy: string;
+    sell:string;
+    date:number; 
 }
 
 export interface ICotacao{

@@ -22,7 +22,7 @@ export interface State{
     operacao : Operacoes;
     criptomoeda1: CriptoMoeda;
     criptomoeda2: CriptoMoeda;
-    valor : any;
+    valor : number;
     data : Date;
 }
 
@@ -30,32 +30,42 @@ export class Operacao extends React.Component<{}, State>{
     constructor(props: any) {
         super(props);
         this.state = { operacao: Operacoes.Comprar, criptomoeda1 : new Bitcoin(), criptomoeda2 : new Brita(), valor : 0, data : new Date()};
-      }    
-
-  
+      }   
+      
+      
     Adiciona = () => {  
-           
-        if(this.state.operacao == Operacoes.Trocar){
-            if(this.state.criptomoeda1 == this.state.criptomoeda2){
-                alert('Na operação de troca as moedas não podem ser iguais')
-                return;
-            }            
-        }
 
-        if(this.state.valor == 0 || this.state.valor < 0){
-            alert('O valor não foi informado ou é negativo.')
-            return;
-        }
-
-       console.log(this.state.criptomoeda1.ObterCotacao(new Date()))
-       console.log(this.state.criptomoeda2.ObterCotacao(new Date()))
-
-        var mov = new Movimentacao(this.state.data, this.state.operacao, this.state.valor, this.state.criptomoeda1,this.state.criptomoeda2)
-       
-        PubSub.publish("nova-operacao", 1)                    
+        useIndexedDB('movimentacao')
+        .add({data : this.state.data, operacao : this.state.operacao, valor : this.state.valor, criptomoeda1 : this.state.criptomoeda1 , criptomoeda2 : this.state.criptomoeda2});
+       var mov = new Movimentacao(0,this.state.data, this.state.operacao, this.state.valor, this.state.criptomoeda1, this.state.criptomoeda2)
+        console.log(mov)
+        PubSub.publish("nova-operacao", 1)        
     }
+  
+    // Adiciona = () => {  
+           
+    //     if(this.state.operacao == Operacoes.Trocar){
+    //         if(this.state.criptomoeda1 == this.state.criptomoeda2){
+    //             alert('Na operação de troca as moedas não podem ser iguais')
+    //             return;
+    //         }            
+    //     }
 
-    setOperacao(o : any){           
+    //     if(this.state.valor == 0 || this.state.valor < 0){
+    //         alert('O valor não foi informado ou é negativo.')
+    //         return;
+    //     }
+
+    //    console.log(this.state.criptomoeda1.ObterCotacao(new Date()))
+    //    console.log(this.state.criptomoeda2.ObterCotacao(new Date()))
+
+    //     var mov = new Movimentacao(this.state.data, this.state.operacao, this.state.valor, this.state.criptomoeda1,this.state.criptomoeda2)
+       
+    //     PubSub.publish("nova-operacao", 1)                    
+    // }
+
+    setOperacao(o : any){ 
+        o.persist();          
         if(o == Operacoes.Trocar){
             //exibir as duas caixas de criptomoedas col-md-6
         }else{
@@ -64,35 +74,20 @@ export class Operacao extends React.Component<{}, State>{
         this.setState({operacao : o.target.value}); 
     }
 
-    setCriptomoeda1(o : any ){   
-        if(o == Criptomoedas.Bitcoin) {
-            this.setState({criptomoeda2 : new Bitcoin() }); 
-
-            if(this.state.operacao == Operacoes.Trocar)
-                this.setState({criptomoeda1 : new Brita()})
-        }else{
-            this.setState({criptomoeda2 : new Brita() }); 
-
-            if(this.state.operacao == Operacoes.Trocar)
-                this.setState({criptomoeda1 : new Bitcoin() }); 
-        }                 
+    setCriptomoeda1(o : any ){  
+        o.persist();  
+        console.log('criptomoeda1:'+o.target.value)
+        this.setState({criptomoeda1 : o.target.value})             
     }
 
-    setCriptomoeda2(o : any){    
-        if(o == Criptomoedas.Bitcoin) {
-            this.setState({criptomoeda2 : new Bitcoin() }); 
-
-            if(this.state.operacao == Operacoes.Trocar)
-                this.setState({criptomoeda1 : new Brita()})
-        }else{
-            this.setState({criptomoeda2 : new Brita() }); 
-
-            if(this.state.operacao == Operacoes.Trocar)             
-                this.setState({criptomoeda1 : new Bitcoin() }); 
-        }         
+    setCriptomoeda2(o : any){  
+        o.persist();    
+        console.log('criptomoeda2:'+o.target.value)
+        this.setState({criptomoeda2 : o.target.value})           
     }
 
     setValor(o : any){ 
+        o.persist();
         if(o == 0){
             alert('Valor não pode ser 0')
         }  
@@ -100,7 +95,7 @@ export class Operacao extends React.Component<{}, State>{
             alert('Valor não pode ser negativo')
              
         } else{
-            this.setState({valor : (o as number)}); 
+            this.setState({valor : o.target.value}); 
         }             
     }
 
@@ -139,7 +134,7 @@ export class Operacao extends React.Component<{}, State>{
                 <Form.Label>CriptoMoeda1</Form.Label>                
                 <FormControl as="select" id="criptomoeda1" onChange={this.setCriptomoeda1.bind(this)}>
                     <option value={Criptomoedas.Bitcoin} label={Criptomoedas.Bitcoin}></option>
-                    <option value={Criptomoedas.Bitcoin} label={Criptomoedas.Brita}></option>               
+                    <option value={Criptomoedas.Brita} label={Criptomoedas.Brita}></option>               
                 </FormControl>
                 <Form.Control.Feedback type="invalid">              
                 </Form.Control.Feedback>
@@ -152,7 +147,7 @@ export class Operacao extends React.Component<{}, State>{
                 <FormControl as="select" id="criptomoeda2"
                 onChange={this.setCriptomoeda2.bind(this)}>
                     <option value={Criptomoedas.Bitcoin} label={Criptomoedas.Bitcoin}></option>
-                    <option value={Criptomoedas.Bitcoin} label={Criptomoedas.Brita}></option>          
+                    <option value={Criptomoedas.Brita} label={Criptomoedas.Brita}></option>          
                 </FormControl>
                 <Form.Control.Feedback type="invalid">              
                 </Form.Control.Feedback>

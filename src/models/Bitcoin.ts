@@ -6,12 +6,15 @@ export class Bitcoin extends CriptoMoeda {
 
     constructor(){
         super();
-        this.ObterCotacao(new Date());
+        this.ObterCotacao(new Date()).then((o : ICotacaoBitcoin) => {
+            console.log('then bitcoin')
+            this.cotacaoCompra = Number.parseFloat(o.buy);
+            this.cotacaoVenda = Number.parseFloat(o.sell);
+        })
     }
 
     ObterCotacao(dataCotacao : Date) : Promise<ICotacaoBitcoin> {
-        const url = "https://www.mercadobitcoin.net/api/BTC/day-summary/"
-        +DateHelper.toDateCotacaoBitcoin(dataCotacao);
+        const url = "https://www.mercadobitcoin.net/api/BTC/ticker/";
 
         return fetch(url)
         .then(res => res.json())   

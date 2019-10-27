@@ -1,16 +1,17 @@
 import CriptoMoeda from "./CriptoMoeda";
 import { Cliente } from "./Cliente";
-import { Operacoes } from "./Tipos";
+import { Operacoes, Criptomoedas } from "./Tipos";
+import { Bitcoin } from "./Bitcoin";
 
-export default class Movimentacao{
-        
-    constructor(
+export default class Movimentacao{   
+    constructor(public id: number,
         public data: Date = new Date(), public operacao: Operacoes, public valor: number = 0, public criptomoeda1: CriptoMoeda, public criptomoeda2: CriptoMoeda ){
         this.criptomoeda1 = criptomoeda1;
         this.criptomoeda2 = criptomoeda2;
         this.data = data;
         this.operacao = operacao;
-        this.valor = valor;
+        this.valor = valor;        
+        this.id = id;        
     }
 
     RealizaMovimentacao(cliente : Cliente){

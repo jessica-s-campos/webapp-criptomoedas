@@ -12,6 +12,8 @@ import PubSub from 'pubsub-js';
 import { AccessDB,useIndexedDB } from 'react-indexed-db';
 import { Criptomoedas } from '../models/Tipos';
 import CriptoMoeda from '../models/CriptoMoeda';
+import { Bitcoin } from '../models/Bitcoin';
+import { Brita } from '../models/Brita';
 
 class FiltroExtrato extends Component{
 
@@ -76,14 +78,18 @@ class GridExtrato extends Component<{lista: Array<Movimentacao>}>{
                 <tbody>
                     {
                         this.props.lista.map(function(m) 
-                        {
+                        {                            
                             return (
-                                <tr>
+                               
+                                <tr key={m.id}>
                                 <td>{m.data.getDate()}/{m.data.getMonth() +1}/{m.data.getFullYear()}</td>
                                 <td>{m.operacao}</td>
-                                <td>{m.criptomoeda1}</td>
-                                <td>{m.criptomoeda2}</td>
+                                <td>{m.criptomoeda1 instanceof Bitcoin ? "Bitcoin" : "Brita"}</td>
+                                <td>{m.criptomoeda2 instanceof Brita ? "Brita" : "Bitcoins"}</td>
                                 <td>{m.valor}</td>
+                                <script>
+                               
+                                </script>
                                 </tr>
                             );
                         })  
