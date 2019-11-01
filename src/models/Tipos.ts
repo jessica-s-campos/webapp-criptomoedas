@@ -8,5 +8,6 @@ export enum Criptomoedas {
 export enum Operacoes {
     Comprar = "Comprar",
     Vender = "Vender",
-    Trocar = "Trocar"
+    Trocar = "Trocar",
+    Todas = "Todas"
 }

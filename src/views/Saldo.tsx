@@ -33,32 +33,32 @@ export class Saldo extends Component<any, IState>{
         return <div  className="blog-header">           
             <div className="margin-saldo">           
                 <Row>
-                <Col md="4">
-                    <label className="blog-header-logo">Dinheiro Disponível</label>                
-                </Col>
+                    <Col md="4">
+                        <label className="blog-header-logo">Dinheiro Disponível</label>                
+                    </Col>
 
-                <Col md="4">            
-                    <label className="blog-header-logo">Bitcoins</label>                
-                </Col>
-                
-                <Col md="4">           
-                    <label className="blog-header-logo">Britas</label>                         
-                </Col>
-                
+                    <Col md="4">            
+                        <label className="blog-header-logo">Bitcoins</label>                
+                    </Col>
+                    
+                    <Col md="4">           
+                        <label className="blog-header-logo">Britas</label>                         
+                    </Col>
+                    
                 </Row>
 
                 <Row>
-                <Col md="4">               
-                    <label className="blog-header-logo" id="saldo-dinheiro">100.000,00</label>
-                </Col>
+                    <Col md="4">               
+                        <label className="blog-header-logo" id="saldo-dinheiro">100.000,00</label>
+                    </Col>
 
-                <Col md="4">                       
-                    <label className="blog-header-logo" id="saldo-bitcoins">0,123456</label>       
-                </Col>
-                
-                <Col md="4">           
-                    <label className="blog-header-logo" id="saldo-britas">0,123456</label>               
-                </Col>
+                    <Col md="4">                       
+                        <label className="blog-header-logo" id="saldo-bitcoins">0,123456</label>       
+                    </Col>
+                    
+                    <Col md="4">           
+                        <label className="blog-header-logo" id="saldo-britas">0,123456</label>               
+                    </Col>
             
                 </Row>
             </div>

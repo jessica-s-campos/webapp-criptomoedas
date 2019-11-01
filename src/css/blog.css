@@ -2,15 +2,49 @@
 .margin-root{
   margin-top:50px;
 }
+.container-b{
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center
+  
+}
+
+.box-b {
+  width: 800px;
+  height: 350px;
+  border-width: 1px;
+  border-color: orangered;
+ 
+}
+
+.margin-button{
+  margin-top:10px;
+}
+ 
+.margin-cadastro{
+  margin-top:5%;
+}
+
+.margin-login{
+  margin-top:25%;
+}
+
 .margin-saldo{
   margin-top:20px;
   margin-bottom:20px;
-  margin-left:10%;
-  margin-right:5%;  
 }
 
-.margin-filtro{
-  margin-left:2%;
+.align-center{
+ 
+  align-items: center;
+}
+
+.margin-grid{
+  margin-top:20px;
 }
 
 .blog-header {

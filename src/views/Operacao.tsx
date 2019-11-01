@@ -14,30 +14,28 @@ import Movimentacao from '../models/Movimentacao';
 import PubSub from 'pubsub-js'
 import { AccessDB,useIndexedDB } from 'react-indexed-db';
 import CriptoMoeda from "../models/CriptoMoeda";
-import { Bitcoin } from '../models/Bitcoin';
-import { Brita } from '../models/Brita';
 
-import { Cliente } from '../models/Cliente';
+import  Cliente  from '../models/Cliente';
 
 export interface State{  
     operacao : Operacoes;
-    criptomoeda1: CriptoMoeda;
-    criptomoeda2: CriptoMoeda;
+    criptomoeda1: Criptomoedas;
+    criptomoeda2: Criptomoedas;
     valor : number;
     data : Date;
 }
 
 export class Operacao extends React.Component<{}, State>{
+    condition : any;
     constructor(props: any) {
         super(props);
-        this.state = { operacao: Operacoes.Comprar, criptomoeda1 : new Bitcoin(), criptomoeda2 : new Brita(), valor : 0, data : new Date()};
+        this.state = { operacao: Operacoes.Comprar, criptomoeda1 : Criptomoedas.Bitcoin, criptomoeda2 : Criptomoedas.Brita, valor : 0, data : new Date()};
       }   
       
       
-    Adiciona = () => {  
-        
+    Adiciona = () => {          
         var mov = new Movimentacao(this.state.operacao, this.state.valor, this.state.criptomoeda1, this.state.criptomoeda2)               
-        mov.RealizaMovimentacao(new Cliente(0,'Jéssica'))
+        mov.RealizaMovimentacao()
     }
     
     setOperacao(o : any){ 
@@ -47,6 +45,9 @@ export class Operacao extends React.Component<{}, State>{
         }else{
             //exibir apenas uma caixa de criptomoeda col-md-12
         }
+
+        this.condition = o.target.value == Operacoes.Trocar;
+
         this.setState({operacao : o.target.value}); 
     }
 
@@ -75,13 +76,15 @@ export class Operacao extends React.Component<{}, State>{
         }             
     }
 
+    
+
     render() {
         
         return (<Container>
             
             <Form>
             <Row>
-            
+           
             <Col md="12">
                 <Form.Label>Operação</Form.Label>
                 <FormControl as="select" id="operacao" value={this.state.operacao} onChange={this.setOperacao.bind(this)}>
@@ -106,31 +109,45 @@ export class Operacao extends React.Component<{}, State>{
             </InputGroup>
             </Col>
           
-            <Col md="6">
-                <Form.Label>CriptoMoeda1</Form.Label>                
-                <FormControl as="select" id="criptomoeda1" onChange={this.setCriptomoeda1.bind(this)}>
-                    <option value={Criptomoedas.Bitcoin} label={Criptomoedas.Bitcoin}></option>
-                    <option value={Criptomoedas.Brita} label={Criptomoedas.Brita}></option>               
-                </FormControl>
-                <Form.Control.Feedback type="invalid">              
-                </Form.Control.Feedback>
-            </Col>
-    
-         
-            {/* Caso a operação seja troca exibir esse campo */}
-            <Col md="6">
-                <Form.Label>CriptoMoeda2</Form.Label>
-                <FormControl as="select" id="criptomoeda2"
-                onChange={this.setCriptomoeda2.bind(this)}>
-                    <option value={Criptomoedas.Bitcoin} label={Criptomoedas.Bitcoin}></option>
-                    <option value={Criptomoedas.Brita} label={Criptomoedas.Brita}></option>          
-                </FormControl>
-                <Form.Control.Feedback type="invalid">              
-                </Form.Control.Feedback>
-            </Col>
             
+            
+            {this.condition
+            ? 
+                    <Col md="12">
+                        <Form.Label>CriptoMoeda1</Form.Label>                
+                        <FormControl as="select" id="criptomoeda1" onChange={this.setCriptomoeda1.bind(this)}>
+                            <option value={Criptomoedas.Bitcoin} label={Criptomoedas.Bitcoin}></option>
+                            <option value={Criptomoedas.Brita} label={Criptomoedas.Brita}></option>               
+                        </FormControl>
+                        <Form.Control.Feedback type="invalid">              
+                        </Form.Control.Feedback>
+                    
+                        <Form.Label>CriptoMoeda2</Form.Label>
+                        <FormControl as="select" id="criptomoeda2"
+                        onChange={this.setCriptomoeda2.bind(this)}>
+                            <option value={Criptomoedas.Bitcoin} label={Criptomoedas.Bitcoin}></option>
+                            <option value={Criptomoedas.Brita} label={Criptomoedas.Brita}></option>          
+                        </FormControl>
+                        <Form.Control.Feedback type="invalid">              
+                        </Form.Control.Feedback>
+                    </Col>
+                
+            : 
+                <Col md="12">
+                    <Form.Label>CriptoMoeda1</Form.Label>                
+                    <FormControl as="select" id="criptomoeda1" onChange={this.setCriptomoeda1.bind(this)}>
+                        <option value={Criptomoedas.Bitcoin} label={Criptomoedas.Bitcoin}></option>
+                        <option value={Criptomoedas.Brita} label={Criptomoedas.Brita}></option>               
+                    </FormControl>
+                    <Form.Control.Feedback type="invalid">              
+                    </Form.Control.Feedback>
+                </Col>
+            
+            }
+        
            
-            <Col md="12">
+           
+            <Col md="12" className="margin-button">
                 <Button variant="success" id="btn-ok" onClick={this.Adiciona}>OK</Button>
             </Col>
             

@@ -14,12 +14,13 @@ export default class Home extends Component{
     render() {
         return (
             <Container>
-                <div>
-                    <Header titulo="WebApp Desafio"></Header>
-                </div>
-                <div>
-                    <Saldo/>   
-                </div>
+              
+                <Header titulo="WebApp Desafio"></Header>
+             
+   
+                <Saldo/>   
+            
+                
                 <Row>
                     <div className="col-md-6">
                         <Header titulo="Movimentações"></Header>
@@ -30,12 +31,13 @@ export default class Home extends Component{
                 </Row>
                 <Row>
                     <div className="col-md-6">
-                            <Operacao/>
-                    </div>
+                        <Operacao/>
+                    </div>                   
                     <div className="col-md-6">
                         <GridBox/>
                     </div>
                 </Row>
+             
             </Container>
 
         )

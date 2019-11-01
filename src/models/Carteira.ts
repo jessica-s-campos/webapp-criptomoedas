@@ -1,7 +1,4 @@
 import  CriptoMoeda  from "./CriptoMoeda";
-import { Brita } from "./Brita";
-import { Bitcoin } from "./Bitcoin";
-
 export class Carteira {
 
     private criptomoedas: Array<CriptoMoeda>;
@@ -10,9 +7,11 @@ export class Carteira {
     constructor(){
         this.criptomoedas = new Array<CriptoMoeda>();    
         this.dinheiro = 100000;        
+        
     }
 
-    getDinheiro() : number{
+    getDinheiro() : number{    
+        console.log('aqui 2')  
         return this.dinheiro;
     }
 

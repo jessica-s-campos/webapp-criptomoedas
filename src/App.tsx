@@ -5,6 +5,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
 
 class App extends Component  {
+
+  RemoveLogged = () =>{
+    localStorage.removeItem('cliente');
+    window.location.reload();
+  }
+
   render(){
     return (
   
@@ -18,7 +24,7 @@ class App extends Component  {
           <div className="collapse navbar-collapse" id="navbarsExampleDefault">
           <ul className="navbar-nav mr-auto">
             <li className="nav-item active"><Link to="/" className="nav-link">Home</Link></li>
-            <li className="nav-item"><Link to="/clientes" className="nav-link">Clientes</Link></li>
+            <li className="nav-item"><Link to="/" onClick={this.RemoveLogged} className="nav-link">Sair</Link></li>
             {/* <li className="nav-item">
               <a className="nav-link disabled" href="#">Disabled</a>
             </li> */}
