@@ -1,29 +1,24 @@
 
 import { useIndexedDB } from 'react-indexed-db';
+import Saldo from './Saldo';
 
 export default class Cliente{
         
-    public readonly id : number = 0;
-    public dinheiro : number;
-    public bitcoins : number;
-    public britas : number;
+    public readonly id : number = 1;  
+    public saldo : Saldo = new Saldo(100000,0,0);
 
     constructor(public nome: string, public email: string, public senha: string){
         this.nome = nome;
         this.email = email;
-        this.senha = senha;   
-        this.dinheiro = 100000;                 
-        this.britas = 0;                 
-        this.bitcoins = 0;                 
+        this.senha = senha;                
     }    
 
 
-    public Create() {
-        console.log(this)
-        useIndexedDB('cliente').add(this).then( o => {
-         console.log('cliente criado')
+    public Create() {    
+        useIndexedDB('cliente').add(this).then( o => {        
+         this.saldo.Create();
         });
-    }
+    }    
     
      Logar() : Promise<number>{       
         return useIndexedDB('cliente').getAll()
@@ -32,13 +27,4 @@ export default class Cliente{
         })     
     }
 
-
-    getDinheiro(): number{      
-        return this.dinheiro;
-    }
-
-    setDinheiro(valor : number){
-        this.dinheiro = valor;
-    }
-    
 }

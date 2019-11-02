@@ -9,6 +9,8 @@ import { Link, withRouter, Redirect } from "react-router-dom";
 import '../css/blog.css'
 import { Header } from './Header';
 import Cliente  from '../models/Cliente';
+import { Mensagem } from './Mensagem';
+import logoApp from '../imagens/bitcoin.png';
 
 export interface ICliente{  
     nome: string,
@@ -112,7 +114,7 @@ class Login extends Component<{},ILogin> {
             PubSub.publish("login-autorizado", id)               
         })
         .catch(err => {
-            alert("Não foi encontrado nenhum cliente cadastrado com esse email e senha");
+            PubSub.publish("update-msg", ['err','Não foi encontrado nenhum cliente cadastrado com esse email e senha',true])          
         })
 	}
 
@@ -149,20 +151,28 @@ export default class LoginBox extends React.Component {
   
     
     render() {
-        return (<div className="container-b">
-            <Row className="box-b row">
-                    <div className="col-md-6">
-                        <CadastroCliente/>                        
-                    </div>
+        return (<div>
+            <div className="container-b">
                             
-                    <div className="col-md-6">
-                        <Login/>                         
+                            <Row className="box-b">
+                                    <div className="col-md-12 align-logo-login">
+                                        <img src={logoApp} width="100" height="100" alt=""/>
+                                    </div>
+                                    <div className="col-md-6">
+                                        <CadastroCliente/>                        
+                                    </div>
+                                 
+                                    <div className="col-md-6">
+                                        <Login/>                         
+                                    </div>    
+                               
+                                 
+                                <Mensagem/>                         
+                            </Row>     
+                                              
                     </div>
-                    
-                </Row>
+                   
         </div>
-   
-          
         )
     }
 

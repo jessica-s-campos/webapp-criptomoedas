@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
+import './css/blog.css'
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
+import logoApp from './imagens/bitcoin.png';
 
 class App extends Component  {
 
@@ -15,33 +17,16 @@ class App extends Component  {
     return (
   
       <div className="container">
-        <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-          <a className="navbar-brand" href="#n">Desafio</a>
-          <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
-          </button>
-  
-          <div className="collapse navbar-collapse" id="navbarsExampleDefault">
+        <nav className="navbar navbar-expand-md navbar-light fixed-top bg-light border-divisor-bottom">
+          
+          <div className="margin-right-nav">
+            <img src={logoApp} width="60" height="60" alt=""/>
+          </div>
+
           <ul className="navbar-nav mr-auto">
             <li className="nav-item active"><Link to="/" className="nav-link">Home</Link></li>
-            <li className="nav-item"><Link to="/" onClick={this.RemoveLogged} className="nav-link">Sair</Link></li>
-            {/* <li className="nav-item">
-              <a className="nav-link disabled" href="#">Disabled</a>
-            </li> */}
-            {/* <li className="nav-item dropdown">
-              <a className="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-              <div className="dropdown-menu" aria-labelledby="dropdown01">
-                <a className="dropdown-item" href="#">Action</a>
-                <a className="dropdown-item" href="#">Another action</a>
-                <a className="dropdown-item" href="#">Something else here</a>
-              </div>
-            </li> */}
-          </ul>
-          {/* <form className="form-inline my-2 my-lg-0">
-            <input className="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"/>
-            <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-          </form> */}
-        </div>
+            <li className="nav-item"><Link to="/" onClick={this.RemoveLogged} className="nav-link">Sair</Link></li>          
+          </ul>        
         </nav>
         <Container>
           {this.props.children}

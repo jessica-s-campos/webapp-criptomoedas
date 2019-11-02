@@ -1,10 +1,9 @@
 
+import Saldo from "./Saldo";
 import Cliente from "./Cliente";
 import { Operacoes, Criptomoedas } from "./Tipos";
 import { useIndexedDB } from 'react-indexed-db';
 import { _1RealEmBritas, _1RealEmBitcoins } from "../helpers/Convert";
-import { number } from "prop-types";
-
 
 export default class Movimentacao{   
           
@@ -26,18 +25,23 @@ export default class Movimentacao{
     }
 
     RealizaMovimentacao(){
+        
+        //PubSub.publish("update-msg", ['success','Movimentação inserida',true])          
+
         var id = localStorage.getItem('cliente'); 
         var total = 0;   
+
         this.cliente_id = id == null ? 0 : Number.parseInt(id);
-            
+            console.log('cliente da transacao:',this.cliente_id)
             useIndexedDB('cliente').getByID<Cliente>(this.cliente_id)
-            .then(cliente => {             
-                
+            .then(cli => {             
+                var cliente = cli;
+
                 if(this.operacao == Operacoes.Comprar){
                  
-                    if(cliente.dinheiro < this.valor)
+                    if(cliente.saldo.dinheiro < this.valor)
                     {
-                        console.log('Não tem dinheiro suficiente.')
+                        PubSub.publish("update-msg", ['err','Não há dinheiro suficiente para realizar a operação.',true])          
                     }
                     else
                     {                                               
@@ -47,14 +51,17 @@ export default class Movimentacao{
                             
                             _1RealEmBitcoins().then(res => {
                                 console.log('_1RealEmBitcoins')
+
                                 total = this.valor * res;
-                                cliente.dinheiro = cliente.dinheiro - this.valor;
-                                cliente.bitcoins = total;
+                                cliente.saldo.dinheiro = cliente.saldo.dinheiro - this.valor;
+                                cliente.saldo.bitcoins = total;
+                                
                                 console.log('total :',total)
                                 console.log('valor :',this.valor)
-                                console.log('saldo dinheiro :',cliente.dinheiro)
-                                console.log('saldo britas :',cliente.britas)
-                                console.log('saldo bitcoins :',cliente.bitcoins)
+                                console.log('saldo dinheiro :',cliente.saldo.dinheiro)
+                                console.log('saldo britas :',cliente.saldo.britas)
+                                console.log('saldo bitcoins :',cliente.saldo.bitcoins)
+
                             })
                             
                         }
@@ -64,13 +71,13 @@ export default class Movimentacao{
                             _1RealEmBritas().then(res => {
                                 console.log('_1RealEmBritas')
                                 total = this.valor * res;
-                                cliente.dinheiro = cliente.dinheiro - this.valor;
-                                cliente.britas = total;
+                                cliente.saldo.dinheiro = cliente.saldo.dinheiro - this.valor;
+                                cliente.saldo.britas = total;
                                 console.log('total :',total)
                                 console.log('valor :',this.valor)
-                                console.log('saldo dinheiro :',cliente.dinheiro)
-                                console.log('saldo britas :',cliente.britas)
-                                console.log('saldo bitcoins :',cliente.bitcoins)
+                                console.log('saldo dinheiro :',cliente.saldo.dinheiro)
+                                console.log('saldo britas :',cliente.saldo.britas)
+                                console.log('saldo bitcoins :',cliente.saldo.bitcoins)                                
                             })
                             
                         }
@@ -87,10 +94,10 @@ export default class Movimentacao{
                         _1RealEmBitcoins().then(res => {
                             console.log('_1RealEmBitcoins')
                             total = this.valor * res;
-                            cliente.dinheiro = cliente.dinheiro + total;
+                            cliente.saldo.dinheiro = cliente.saldo.dinheiro + total;
                             console.log('total :',total)
                             console.log('valor :',this.valor)
-                            console.log('dinheiro :',cliente.dinheiro)
+                            console.log('dinheiro :',cliente.saldo.dinheiro)
                         })
                         
                     }
@@ -100,10 +107,10 @@ export default class Movimentacao{
                         _1RealEmBritas().then(res => {
                             console.log('_1RealEmBritas')
                             total = this.valor * res;
-                            cliente.dinheiro = cliente.dinheiro + total;
+                            cliente.saldo.dinheiro = cliente.saldo.dinheiro + total;
                             console.log('total :',total)
                             console.log('valor :',this.valor)
-                            console.log('dinheiro :',cliente.dinheiro)
+                            console.log('dinheiro :',cliente.saldo.dinheiro)
                         })
                         
                     }
@@ -113,18 +120,10 @@ export default class Movimentacao{
 
                 if(this.operacao == Operacoes.Trocar){
                     console.log(`Trocando : ${this.criptomoeda1} por ${this.criptomoeda2}`)  
-                    
-                    
+
                 }
 
-
-
-                // useIndexedDB('saldo').add({dinheiro : 120, bitcoin: 2, brita: 3}).then( o => {
-                //     console.log(o)
-
-                //     PubSub.publish("saldo-atualizado", 0)           
-                // });
-
+              
                 // useIndexedDB('movimentacao').add(this).then( o => {
                 //     console.log(o)
 
@@ -140,6 +139,8 @@ export default class Movimentacao{
        
             
     }
+
+    
 
  
 }

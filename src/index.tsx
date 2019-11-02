@@ -11,6 +11,9 @@ import {DBConfig} from './Database';
 import { initDB } from 'react-indexed-db';
 import LoginBox from './views/Login';
 import Cliente from './models/Cliente';
+import { Mensagem } from './views/Mensagem';
+
+import Row from 'react-bootstrap/Row';
 
 initDB(DBConfig);
 
@@ -30,19 +33,25 @@ PubSub.subscribe('login-autorizado',(topis: any, user_id : string) => {
 if(!localStorage.getItem('cliente')){
     ReactDOM.render((<Router history={customHistory}>
         <div>
-        <LoginBox/>
+     
+                <LoginBox/> 
+                   
         </div>
     </Router>), document.getElementById('root'));
 }else{
     ReactDOM.render((<Router history={customHistory}>       
-        <div> 
+       
+        <div className="container-b">           
+           <div className="box-b-home">
                 <App>    
                     <Home>           
                         
                     </Home>
                 </App>
 
+            </div>
         </div>
+        
     </Router>), document.getElementById('root'));
 }
 

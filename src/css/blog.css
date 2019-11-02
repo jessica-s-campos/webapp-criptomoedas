@@ -1,7 +1,36 @@
 /* stylelint-disable selector-list-comma-newline-after */
-.margin-root{
-  margin-top:50px;
+
+.success-msg{
+  color: green;
 }
+.err-msg{
+  color: red; 
+}
+
+.txt-align{
+  text-align: right;
+}
+
+.txt-center{
+  text-align: center;
+}
+
+.msg-componente{
+  background-color: purple;
+}
+
+.msg-oculta{
+  display: none;
+}
+
+.msg-visivel{ 
+  display: inline;
+}
+
+.margin-root{
+  margin-top:0;
+}
+
 .container-b{
   width: 100vw;
   height: 100vh;
@@ -15,10 +44,22 @@
 
 .box-b {
   width: 800px;
-  height: 350px;
-  border-width: 1px;
-  border-color: orangered;
- 
+  height: 500px ;    
+  align-items: center
+}
+
+.box-b-home
+{
+  align-items: center
+}
+
+.border-divisor-bottom{
+  border-bottom:1px solid orangered;
+}
+
+.border-divisor-split{
+  border-right: 1px solid orangered;
+  height: 500px;
 }
 
 .margin-button{
@@ -37,10 +78,18 @@
   margin-top:20px;
   margin-bottom:20px;
 }
-
-.align-center{
- 
+.align-logo-login{ 
+  text-align: center;
+}
+.align-center{ 
   align-items: center;
+}
+
+.text-oranged{
+  color: orangered !important;
+}
+.margin-right-nav{
+  margin-right: 15px;
 }
 
 .margin-grid{
