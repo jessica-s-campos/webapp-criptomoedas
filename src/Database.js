@@ -1,6 +1,5 @@
 
-
-export const DBConfig = {
+ export const DBConfig = {
     name: 'MyDB',
     version: 1,
     objectStoresMeta: [
@@ -24,11 +23,10 @@ export const DBConfig = {
         store: 'cliente',
         
             storeConfig: { keyPath: 'id', autoIncrement: true },
-            storeSchema: [
-   
+            storeSchema: [   
               { name: 'nome', keypath: 'nome', options: { unique: false } },
               { name: 'email', keypath: 'email', options: { unique: false } },
-              { name: 'senha', keypath: 'senha', options: { unique: false } },            
+              { name: 'senha', keypath: 'senha', options: { unique: false } }            
             ]
       },
       {
@@ -38,7 +36,7 @@ export const DBConfig = {
               { name: 'cliente_id', keypath: 'cliente_id', options: { unique: false } },
               { name: 'dinheiro', keypath: 'dinheiro', options: { unique: false } },
               { name: 'bitcoins', keypath: 'bitcoins', options: { unique: false } },            
-              { name: 'britas', keypath: 'britas', options: { unique: false } },            
+              { name: 'britas', keypath: 'britas', options: { unique: false } }           
             ]
       }
     ]

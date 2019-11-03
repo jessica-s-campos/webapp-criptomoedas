@@ -12,10 +12,22 @@ import PubSub from 'pubsub-js';
 import { AccessDB,useIndexedDB } from 'react-indexed-db';
 import { Criptomoedas, Operacoes } from '../models/Tipos';
 import CriptoMoeda from '../models/CriptoMoeda';
-
+import Pagination from 'react-bootstrap/Pagination'
 import FormControl from 'react-bootstrap/FormControl';
 import InputMask from 'react-input-mask';
 import Input from 'react-select/src/components/Input';
+
+let active = 2;
+let items : any = [];
+for (let number = 1; number <= 5; number++) {
+  items.push(
+    <Pagination.Item key={number} active={number === active}>
+      {number}
+    </Pagination.Item>,
+  );
+}
+
+
 
 class FiltroExtrato extends Component{
  
@@ -63,8 +75,9 @@ class FiltroExtrato extends Component{
 }
 
 class GridExtrato extends Component<{lista: Array<Movimentacao>}>{
-    
+
     render() {
+        console.log(items)
         return (
             <div>
                 <Table className="striped bordered hover margin-grid">
@@ -99,6 +112,7 @@ class GridExtrato extends Component<{lista: Array<Movimentacao>}>{
                 </tbody>
 
                 <tfoot>
+                   
                 </tfoot>
             </Table>  
             </div>

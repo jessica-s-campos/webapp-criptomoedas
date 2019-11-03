@@ -1,5 +1,5 @@
 
-import { useIndexedDB } from 'react-indexed-db';
+import { useIndexedDB,AccessDB } from 'react-indexed-db';
 import Saldo from './Saldo';
 
 export default class Cliente{
@@ -7,16 +7,19 @@ export default class Cliente{
     public readonly id : number = 1;  
     public saldo : Saldo = new Saldo(100000,0,0);
 
-    constructor(public nome: string, public email: string, public senha: string){
+    constructor(public nome: string = '', public email: string = '', public senha: string = ''){
         this.nome = nome;
         this.email = email;
         this.senha = senha;                
     }    
 
-
     public Create() {    
-        useIndexedDB('cliente').add(this).then( o => {        
-         this.saldo.Create();
+        
+        useIndexedDB('cliente').add(this).then( o => {   
+            this.saldo.cliente_id = o;
+            console.log(this.saldo)
+            this.saldo.Create();          
+         
         });
     }    
     

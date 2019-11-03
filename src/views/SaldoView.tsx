@@ -23,7 +23,15 @@ export class SaldoView extends React.Component<any, IState>{
     }
    
     componentDidMount(){   
-               
+    
+        var _id = localStorage.getItem("cliente") || 0;
+        console.log(_id);
+        useIndexedDB('saldo').getByID(_id).then((saldo : Saldo) => {
+            console.log(saldo)
+            this.setState({saldo_bitcoin : saldo.bitcoins, saldo_brita : saldo.britas, saldo_dinheiro : saldo.dinheiro});
+        }); 
+        
+         
         PubSub.subscribe('saldo-atualizado', (topico:any, id:any) => {       
             useIndexedDB('saldo').getByID(id).then((saldo : Saldo) => {
                 this.setState({saldo_bitcoin : saldo.bitcoins, saldo_brita : saldo.britas, saldo_dinheiro : saldo.dinheiro});
@@ -51,15 +59,15 @@ export class SaldoView extends React.Component<any, IState>{
 
                 <Row className="txt-center">
                     <Col md="4">               
-                        <label className="blog-header-logo" id="saldo-dinheiro">100.000,00</label>
+                        <label className="blog-header-logo" id="saldo-dinheiro">{this.state.saldo_dinheiro}</label>
                     </Col>
 
                     <Col md="4">                       
-                        <label className="blog-header-logo" id="saldo-bitcoins">0,123456</label>       
+                        <label className="blog-header-logo" id="saldo-bitcoins">{this.state.saldo_bitcoin}</label>       
                     </Col>
                     
                     <Col md="4">           
-                        <label className="blog-header-logo" id="saldo-britas">0,123456</label>               
+                        <label className="blog-header-logo" id="saldo-britas">{this.state.saldo_brita}</label>               
                     </Col>
             
                 </Row>
