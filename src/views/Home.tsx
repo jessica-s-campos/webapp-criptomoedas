@@ -5,8 +5,8 @@ import { Operacao } from './Operacao';
 import GridBox from './Grid';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Row from 'react-bootstrap/Row';
-import Container from 'react-bootstrap/Container';
 import { Mensagem } from './Mensagem';
+import Container from 'react-bootstrap/Container';
 
 export default class Home extends Component{
     
@@ -15,14 +15,15 @@ export default class Home extends Component{
     render() {
         return (
             <div>
-            
+           
               
                 <Header titulo="WebApp Desafio"></Header>
              
    
                 <SaldoView/>   
             
-                
+                <Container>
+                    
                 <Row>
                     <div className="col-md-6">
                         <Header titulo="Movimentações"></Header>
@@ -44,6 +45,7 @@ export default class Home extends Component{
                         <GridBox/>
                     </div>
                 </Row>
+                </Container>
              
             </div>
       

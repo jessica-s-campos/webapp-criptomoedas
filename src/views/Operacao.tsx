@@ -102,10 +102,7 @@ export class Operacao extends React.Component<{}, State>{
                 <InputGroup.Prepend>
                     <InputGroup.Text>R$</InputGroup.Text>
                 </InputGroup.Prepend>
-                <FormControl as="input" onChange={this.setValor.bind(this)}/>
-                    <InputGroup.Append>
-                        <InputGroup.Text>.00</InputGroup.Text>
-                    </InputGroup.Append>
+                <FormControl as="input" type="number" onChange={this.setValor.bind(this)}/>                   
             </InputGroup>
             </Col>
           

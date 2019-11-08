@@ -77,7 +77,7 @@ class FiltroExtrato extends Component{
 class GridExtrato extends Component<{lista: Array<Movimentacao>}>{
 
     render() {
-        console.log(items)
+     
         return (
             <div>
                 <Table className="striped bordered hover margin-grid">

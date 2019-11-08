@@ -3,7 +3,7 @@ import Saldo from "./Saldo";
 import Cliente from "./Cliente";
 import { Operacoes, Criptomoedas } from "./Tipos";
 import { useIndexedDB } from 'react-indexed-db';
-import { _1RealEmBritas, _1RealEmBitcoins } from "../helpers/Convert";
+import { _1RealEmBritas, _1RealEmBitcoins, CotacaoBrita } from "../helpers/Convert";
 
 
 var saldo : Saldo;
@@ -70,8 +70,9 @@ export default class Movimentacao{
 
                         if(this.criptomoeda1 == Criptomoedas.Brita){
                             
+                            
                             _1RealEmBritas().then(res => {
-                                console.log('_1RealEmBritas')
+                                console.log('_1RealEmBritas:',res)
                                 
                                 total = this.valor * res;
                                 this.cliente.saldo.dinheiro = this.cliente.saldo.dinheiro - this.valor;
@@ -80,7 +81,7 @@ export default class Movimentacao{
                                 this.ExibeInformacoes(total);
                                 this.AtualizaSaldo();
                                 this.InsereMovimentecao();
-                            })                            
+                            })                          
                         }                        
                     }
                 }
@@ -130,7 +131,7 @@ export default class Movimentacao{
                     _1RealEmBitcoins().then(res => {
                        
                         _mult_bitcoin = res;   
-
+                       
                         _1RealEmBritas().then(res => {
                         
                             _mult_brita = res;  
@@ -157,7 +158,7 @@ export default class Movimentacao{
                             this.AtualizaSaldo();
                             this.InsereMovimentecao();   
                                    
-                        })   
+                        }) 
      
                     })   
 

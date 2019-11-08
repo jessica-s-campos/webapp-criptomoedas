@@ -25,18 +25,18 @@ export class SaldoView extends React.Component<any, IState>{
     componentDidMount(){   
     
         var _id = localStorage.getItem("cliente") || 0;
-        console.log(_id);
-        useIndexedDB('saldo').getByID(_id).then((saldo : Saldo) => {
-            console.log(saldo)
-            this.setState({saldo_bitcoin : saldo.bitcoins, saldo_brita : saldo.britas, saldo_dinheiro : saldo.dinheiro});
-        }); 
-        
+  
+        this.ObterUltimoSaldo();          
          
         PubSub.subscribe('saldo-atualizado', (topico:any, id:any) => {       
-            useIndexedDB('saldo').getByID(id).then((saldo : Saldo) => {
-                this.setState({saldo_bitcoin : saldo.bitcoins, saldo_brita : saldo.britas, saldo_dinheiro : saldo.dinheiro});
-            });  
+            this.ObterUltimoSaldo();                    
         });    
+    }
+
+    ObterUltimoSaldo(){
+        new Saldo().ObterUltimoSaldo().then( s => {
+            this.setState({saldo_bitcoin : s.bitcoins, saldo_brita : s.britas, saldo_dinheiro : s.dinheiro});
+        })                 
     }
 
     render() {

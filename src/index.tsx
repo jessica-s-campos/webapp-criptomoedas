@@ -6,14 +6,10 @@ import * as serviceWorker from './serviceWorker';
 import {Router, Route} from 'react-router';
 import {createBrowserHistory} from 'history';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Home from './views/Home';
 import {DBConfig} from './Database';
 import { initDB } from 'react-indexed-db';
 import LoginBox from './views/Login';
-import Cliente from './models/Cliente';
-import { Mensagem } from './views/Mensagem';
-
-import Row from 'react-bootstrap/Row';
+import Home from './views/Home';
 
 initDB(DBConfig);
 
@@ -32,26 +28,15 @@ PubSub.subscribe('login-autorizado',(topis: any, user_id : string) => {
 
 if(!localStorage.getItem('cliente')){
     ReactDOM.render((<Router history={customHistory}>
-        <div>
-     
-                <LoginBox/> 
-                   
+        <div>     
+            <LoginBox/>                    
         </div>
     </Router>), document.getElementById('root'));
 }else{
-    ReactDOM.render((<Router history={customHistory}>       
-       
-        <div className="container-b">           
-           <div className="box-b-home">
-                <App>    
-                    <Home>           
-                        
-                    </Home>
-                </App>
-
-            </div>
-        </div>
-        
+    ReactDOM.render((<Router history={customHistory}>                                         
+       <App> 
+           <Home/>
+       </App>                  
     </Router>), document.getElementById('root'));
 }
 
