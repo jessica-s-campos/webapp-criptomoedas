@@ -1,31 +1,15 @@
 import React, { Component } from 'react'; 
-import Extrato from '../models/Extrato';
 import Movimentacao from '../models/Movimentacao';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Table from 'react-bootstrap/Table';
 import Form from 'react-bootstrap/Form';
-import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import '../css/blog.css';
 import PubSub from 'pubsub-js'; 
-import { AccessDB,useIndexedDB } from 'react-indexed-db';
+import { useIndexedDB } from 'react-indexed-db';
 import { Criptomoedas, Operacoes } from '../models/Tipos';
-import CriptoMoeda from '../models/CriptoMoeda';
-import Pagination from 'react-bootstrap/Pagination'
 import FormControl from 'react-bootstrap/FormControl';
-import InputMask from 'react-input-mask';
-import Input from 'react-select/src/components/Input';
-
-let active = 2;
-let items : any = [];
-for (let number = 1; number <= 5; number++) {
-  items.push(
-    <Pagination.Item key={number} active={number === active}>
-      {number}
-    </Pagination.Item>,
-  );
-}
 
 
 
@@ -80,7 +64,7 @@ class GridExtrato extends Component<{lista: Array<Movimentacao>}>{
      
         return (
             <div>
-                <Table className="striped bordered hover margin-grid">
+                <Table id="grid1" className="striped bordered hover margin-grid">
                 <thead>
                     <tr>
                         <th>DATA</th>
@@ -115,10 +99,12 @@ class GridExtrato extends Component<{lista: Array<Movimentacao>}>{
                    
                 </tfoot>
             </Table>  
+            
             </div>
         );
     }
-
+ 
+    
 }
 
 interface IState{
@@ -131,21 +117,25 @@ export default class GridBox extends React.Component<any, IState>{
         this.state = { extrato: new Array<Movimentacao>() };
       }
        
-    componentDidMount(){    
-        useIndexedDB('movimentacao').getAll().then( (mov:Array<Movimentacao>) => {
-            this.setState({extrato : mov})
-        });
+    componentDidMount(){   
+                
+        this.ObtemMovimentacao();
 
-        PubSub.subscribe('nova-operacao',(topis: any, data : any) => {  
-            useIndexedDB('movimentacao').getAll().then( (mov:Array<Movimentacao>) => {
-                this.setState({extrato : mov})
-            });
+        PubSub.subscribe('nova-operacao',() => {  
+            this.ObtemMovimentacao();
         });
 
         PubSub.subscribe('grid-filtrado',(topis: any, data : any) => {              
             this.setState({extrato : data})            
         });
       }  
+
+    ObtemMovimentacao(){
+        var id = JSON.parse(localStorage.getItem('cliente') || '{}').id;
+        new Movimentacao().ObtemMovimentacao(id).then( lista => {
+            this.setState({extrato : lista})
+        }) 
+    }
 
     render() {
         return (

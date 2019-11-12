@@ -1,20 +1,17 @@
-import React, { Component } from 'react'; 
+import React from 'react'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
 import '../css/blog.css'
 import PubSub from 'pubsub-js'; 
-import { useIndexedDB } from 'react-indexed-db';
 import Saldo from '../models/Saldo';
-import Cliente from '../models/Cliente';
 
 interface IState{
     saldo_bitcoin : number,
     saldo_brita : number,
     saldo_dinheiro : number
 }
-
+var _id : number = 0;
 export class SaldoView extends React.Component<any, IState>{    
   
     constructor(props: any){
@@ -24,17 +21,17 @@ export class SaldoView extends React.Component<any, IState>{
    
     componentDidMount(){   
     
-        var _id = localStorage.getItem("cliente") || 0;
+        _id = JSON.parse(localStorage.getItem('cliente') || '{}').id;
   
         this.ObterUltimoSaldo();          
          
-        PubSub.subscribe('saldo-atualizado', (topico:any, id:any) => {       
+        PubSub.subscribe('saldo-atualizado', () => {       
             this.ObterUltimoSaldo();                    
         });    
     }
 
-    ObterUltimoSaldo(){
-        new Saldo().ObterUltimoSaldo().then( s => {
+    ObterUltimoSaldo(){       
+        new Saldo().ObterUltimoSaldo(_id).then( s => {
             this.setState({saldo_bitcoin : s.bitcoins, saldo_brita : s.britas, saldo_dinheiro : s.dinheiro});
         })                 
     }

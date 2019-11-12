@@ -3,9 +3,9 @@ import Saldo from "./Saldo";
 import Cliente from "./Cliente";
 import { Operacoes, Criptomoedas } from "./Tipos";
 import { useIndexedDB } from 'react-indexed-db';
-import { _1RealEmBritas, _1RealEmBitcoins, CotacaoBrita } from "../helpers/Convert";
+import { _1RealEmBritas, _1RealEmBitcoins } from "../helpers/Convert";
 
-
+var total = 0;   
 var saldo : Saldo;
 
 export default class Movimentacao{   
@@ -16,7 +16,7 @@ export default class Movimentacao{
     public cliente_id : number;
     public cliente : Cliente = new Cliente();
 
-    constructor(public operacao: Operacoes, public valor: number = 0, public criptomoeda1: Criptomoedas, public criptomoeda2: Criptomoedas ){
+    constructor(public operacao: Operacoes = Operacoes.Comprar, public valor: number = 0, public criptomoeda1: Criptomoedas = Criptomoedas.Bitcoin, public criptomoeda2: Criptomoedas = Criptomoedas.Brita ){
         this.criptomoeda1 = criptomoeda1;
         this.criptomoeda2 = criptomoeda2;
         this.data = new Date();
@@ -28,13 +28,18 @@ export default class Movimentacao{
         this.cliente_id = 0;
     }
 
-    RealizaMovimentacao(){    
+    ObtemMovimentacao(cliente_id : number) : Promise<Array<Movimentacao>>{
+        return useIndexedDB('movimentacao').getAll().then( (mov : Array<Movimentacao>) => {
+            return mov.filter( o=> o.cliente_id == cliente_id);
+        });
+    }
 
-        var id = localStorage.getItem('cliente'); 
-        var total = 0;   
+    RealizaMovimentacao(){    
+  
+        var id = JSON.parse(localStorage.getItem('cliente') || '{}').id;
 
         saldo = new Saldo()
-        saldo.ObterUltimoSaldo().then( s => {
+        saldo.ObterUltimoSaldo(id).then( s => {
             saldo = s;            
         });
 
@@ -46,122 +51,16 @@ export default class Movimentacao{
                 this.cliente.saldo = saldo;
                 console.log('ultimo saldo cliente',this.cliente.saldo)
 
-                if(this.operacao == Operacoes.Comprar){
-                   
-                    if(Number.parseFloat(this.cliente.saldo.dinheiro.toString()) < this.valor)                    
-                        PubSub.publish("update-msg", ['err','Não há dinheiro suficiente para realizar a operação.',true])          
-                    
-                    else
-                    {                                               
-                        if(this.criptomoeda1 == Criptomoedas.Bitcoin){
-                            
-                            _1RealEmBitcoins().then(res => {
-                                console.log('_1RealEmBitcoins')
-
-                                total = this.valor * res;
-                                this.cliente.saldo.dinheiro = this.cliente.saldo.dinheiro - this.valor;
-                                this.cliente.saldo.bitcoins = this.cliente.saldo.bitcoins + total;
-                                                                
-                                this.ExibeInformacoes(total);
-                                this.AtualizaSaldo();
-                                this.InsereMovimentecao();
-                            })                            
-                        }
-
-                        if(this.criptomoeda1 == Criptomoedas.Brita){
-                            
-                            
-                            _1RealEmBritas().then(res => {
-                                console.log('_1RealEmBritas:',res)
-                                
-                                total = this.valor * res;
-                                this.cliente.saldo.dinheiro = this.cliente.saldo.dinheiro - this.valor;
-                                this.cliente.saldo.britas = this.cliente.saldo.britas + total;
-                               
-                                this.ExibeInformacoes(total);
-                                this.AtualizaSaldo();
-                                this.InsereMovimentecao();
-                            })                          
-                        }                        
-                    }
+                if(this.operacao == Operacoes.Comprar){                   
+                   this.Comprar();
                 }
 
                 if(this.operacao == Operacoes.Vender){
-                    console.log('Vendendo :', this.criptomoeda1)                                  
-
-                    if(this.criptomoeda1 == Criptomoedas.Bitcoin){
-                            
-                        _1RealEmBitcoins().then(res => {
-                            console.log('_1RealEmBitcoins')
-
-                            total = this.valor * res;
-                            this.cliente.saldo.dinheiro = this.cliente.saldo.dinheiro + this.valor;
-                            this.cliente.saldo.bitcoins = this.cliente.saldo.bitcoins - total;
-
-                            this.ExibeInformacoes(total);        
-                            this.AtualizaSaldo();
-                            this.InsereMovimentecao();                    
-                        })                        
-                    }
-
-                    if(this.criptomoeda1 == Criptomoedas.Brita){
-                        
-                        _1RealEmBritas().then(res => {
-                            console.log('_1RealEmBritas')
-                            total = this.valor * res;
-                            this.cliente.saldo.dinheiro = this.cliente.saldo.dinheiro + this.valor;
-                            this.cliente.saldo.britas = this.cliente.saldo.britas - total;
-
-                            this.ExibeInformacoes(total);        
-                            this.AtualizaSaldo();
-                            this.InsereMovimentecao();   
-                        })
-                        
-                    }
-
-                    
+                    this.Vender();
                 }
 
                 if(this.operacao == Operacoes.Trocar){
-                    console.log(`Trocando : ${this.criptomoeda1} por ${this.criptomoeda2}`)  
-                   
-                    var _mult_bitcoin = 0;
-                    var _mult_brita = 0;
-                    
-                    _1RealEmBitcoins().then(res => {
-                       
-                        _mult_bitcoin = res;   
-                       
-                        _1RealEmBritas().then(res => {
-                        
-                            _mult_brita = res;  
-
-                            //retirar
-                            if(this.criptomoeda1 == Criptomoedas.Brita){
-                                total = this.valor * _mult_brita;
-                                this.cliente.saldo.britas = this.cliente.saldo.britas - total;
-                            }else{
-                                total = this.valor * _mult_bitcoin;
-                                this.cliente.saldo.bitcoins = this.cliente.saldo.bitcoins - total;
-                            }
-
-                            //aumentar
-                            if(this.criptomoeda2 == Criptomoedas.Brita){
-                                total = this.valor * _mult_brita;
-                                this.cliente.saldo.britas = this.cliente.saldo.britas + total;
-                            }else{
-                                total = this.valor * _mult_bitcoin;
-                                this.cliente.saldo.bitcoins = this.cliente.saldo.bitcoins + total;
-                            }
-
-                            this.ExibeInformacoes(total);        
-                            this.AtualizaSaldo();
-                            this.InsereMovimentecao();   
-                                   
-                        }) 
-     
-                    })   
-
+                   this.Trocar();                    
                 }
 
             })
@@ -191,6 +90,112 @@ export default class Movimentacao{
         console.log('saldo dinheiro :',this.cliente.saldo.dinheiro)
         console.log('saldo britas :',this.cliente.saldo.britas)
         console.log('saldo bitcoins :',this.cliente.saldo.bitcoins)
+    }
+
+    Comprar() {
+        if(Number.parseFloat(this.cliente.saldo.dinheiro.toString()) < this.valor)                    
+        PubSub.publish("update-msg", ['err','Não há dinheiro suficiente para realizar a operação.',true])          
+    
+        else
+        {                                               
+            if(this.criptomoeda1 == Criptomoedas.Bitcoin){
+                
+                _1RealEmBitcoins().then(res => {
+                    console.log('_1RealEmBitcoins:', res)                               
+                    total = this.valor * res;
+                    this.cliente.saldo.dinheiro = this.cliente.saldo.dinheiro - this.valor;
+                    this.cliente.saldo.bitcoins = this.cliente.saldo.bitcoins + total;
+                                                    
+                    this.ExibeInformacoes(total);
+                    this.AtualizaSaldo();
+                    this.InsereMovimentecao();
+                })                            
+            }
+
+            if(this.criptomoeda1 == Criptomoedas.Brita){
+                
+                
+                _1RealEmBritas().then(res => {
+                    console.log('_1RealEmBritas:',res)
+                    
+                    total = this.valor * res;
+                    this.cliente.saldo.dinheiro = this.cliente.saldo.dinheiro - this.valor;
+                    this.cliente.saldo.britas = this.cliente.saldo.britas + total;
+                
+                    this.ExibeInformacoes(total);
+                    this.AtualizaSaldo();
+                    this.InsereMovimentecao();
+                })                          
+            }                        
+        }
+    }
+
+    Vender(){
+        console.log('Vendendo :', this.criptomoeda1)                                  
+
+        if(this.criptomoeda1 == Criptomoedas.Bitcoin){
+                
+            _1RealEmBitcoins().then(res => {
+                console.log('_1RealEmBitcoins:', res)
+
+                total = this.valor * res;
+                this.cliente.saldo.dinheiro = this.cliente.saldo.dinheiro + this.valor;
+                this.cliente.saldo.bitcoins = this.cliente.saldo.bitcoins - total;
+
+                this.ExibeInformacoes(total);        
+                this.AtualizaSaldo();
+                this.InsereMovimentecao();                    
+            })                        
+        }
+
+        if(this.criptomoeda1 == Criptomoedas.Brita){
+            
+            _1RealEmBritas().then(res => {
+                console.log('_1RealEmBritas')
+                total = this.valor * res;
+                this.cliente.saldo.dinheiro = this.cliente.saldo.dinheiro + this.valor;
+                this.cliente.saldo.britas = this.cliente.saldo.britas - total;
+
+                this.ExibeInformacoes(total);        
+                this.AtualizaSaldo();
+                this.InsereMovimentecao();   
+            })
+            
+        }
+    }
+
+    Trocar(){
+        console.log(`Trocando : ${this.criptomoeda1} por ${this.criptomoeda2}`)  
+
+        _1RealEmBitcoins().then(_mult_bitcoin => {                 
+           
+            _1RealEmBritas().then(_mult_brita => {              
+
+                //retirar
+                if(this.criptomoeda1 == Criptomoedas.Brita){
+                    total = this.valor * _mult_brita;
+                    this.cliente.saldo.britas = this.cliente.saldo.britas - total;
+                }else{
+                    total = this.valor * _mult_bitcoin;
+                    this.cliente.saldo.bitcoins = this.cliente.saldo.bitcoins - total;
+                }
+
+                //aumentar
+                if(this.criptomoeda2 == Criptomoedas.Brita){
+                    total = this.valor * _mult_brita;
+                    this.cliente.saldo.britas = this.cliente.saldo.britas + total;
+                }else{
+                    total = this.valor * _mult_bitcoin;
+                    this.cliente.saldo.bitcoins = this.cliente.saldo.bitcoins + total;
+                }
+
+                this.ExibeInformacoes(total);        
+                this.AtualizaSaldo();
+                this.InsereMovimentecao();   
+                       
+            }) 
+
+        })   
     }
     
 

@@ -22,8 +22,9 @@
       {
         store: 'cliente',
         
-            storeConfig: { keyPath: 'id', autoIncrement: true },
+            storeConfig: { keyPath: 'id', autoIncrement: true, unique : true },
             storeSchema: [   
+            
               { name: 'nome', keypath: 'nome', options: { unique: false } },
               { name: 'email', keypath: 'email', options: { unique: false } },
               { name: 'senha', keypath: 'senha', options: { unique: false } }            
@@ -37,6 +38,16 @@
               { name: 'dinheiro', keypath: 'dinheiro', options: { unique: false } },
               { name: 'bitcoins', keypath: 'bitcoins', options: { unique: false } },            
               { name: 'britas', keypath: 'britas', options: { unique: false } }           
+            ]
+      }
+      ,
+      {
+        store: 'cotacao',
+            storeConfig: { keyPath: 'id', autoIncrement: true },
+            storeSchema: [
+              { name: 'ultimacotacao', keypath: 'ultimacotacao', options: { unique: false } },
+              { name: 'data', keypath: 'data', options: { unique: false } },
+              { name: 'moeda', keypath: 'moeda', options: { unique: false } }     
             ]
       }
     ]

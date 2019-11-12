@@ -6,7 +6,6 @@ import GridBox from './Grid';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Row from 'react-bootstrap/Row';
 import { Mensagem } from './Mensagem';
-import Container from 'react-bootstrap/Container';
 
 export default class Home extends Component{
     
@@ -22,30 +21,30 @@ export default class Home extends Component{
    
                 <SaldoView/>   
             
-                <Container>
+               
                     
                 <Row>
-                    <div className="col-md-6">
-                        <Header titulo="Movimentações"></Header>
+                    <div className="col-md-4">
+                        <Header titulo="Movimentação"></Header>
                     </div>
-                    <div className="col-md-6">
+                    <div className=""></div>
+                    <div className="col-md-8">
                         <Header titulo="Extrato"></Header>
                     </div>                   
                 </Row>
                 
                 <Row>
-                    <div className="col-md-6 border-divisor-split">
+                    <div className="col-md-4">
                         <Operacao/>
                         
-                        <Mensagem/>
-                    
+                        <Mensagem/>                    
                     </div>  
-
-                    <div className="col-md-6">
-                        <GridBox/>
+                    <div className="border-divisor-split"></div>
+                    <div className="col-md-7">                       
+                        <GridBox/>                     
                     </div>
                 </Row>
-                </Container>
+               
              
             </div>
       

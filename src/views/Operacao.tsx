@@ -1,5 +1,4 @@
-import React, { Component } from 'react'; 
-import Select from 'react-select'; 
+import React from 'react'; 
 import { Criptomoedas, Operacoes } from '../models/Tipos';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Form from 'react-bootstrap/Form';
@@ -9,13 +8,8 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
 import Movimentacao from '../models/Movimentacao';
-import PubSub from 'pubsub-js'
-import { AccessDB,useIndexedDB } from 'react-indexed-db';
-import CriptoMoeda from "../models/CriptoMoeda";
 
-import  Cliente  from '../models/Cliente';
 
 export interface State{  
     operacao : Operacoes;

@@ -11,8 +11,7 @@ export class Mensagem extends Component<{},{tipo : string, mensagem : string, sh
     }
 
     componentDidMount(){
-        PubSub.subscribe('update-msg',(topis: any, data : any) => { 
-            console.log('update-msg', data)
+        PubSub.subscribe('update-msg',(topis: any, data : any) => {            
             this.setState({tipo : data[0], mensagem : data[1], show : data[2]});
 
             setTimeout(() => {

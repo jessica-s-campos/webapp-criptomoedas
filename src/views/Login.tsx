@@ -1,11 +1,9 @@
 import React,{Component} from 'react';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
-import FormControl from 'react-bootstrap/FormControl';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
-import { Link, withRouter, Redirect } from "react-router-dom";
 import '../css/blog.css'
 import { Header } from './Header';
 import Cliente  from '../models/Cliente';
@@ -110,10 +108,10 @@ class Login extends Component<{},ILogin> {
        
         new Cliente('',this.state.email, this.state.senha)
         .Logar()
-        .then( (id) =>{                 
-            PubSub.publish("login-autorizado", id)               
+        .then((cliente : Cliente) => {   
+            PubSub.publish("login-autorizado", cliente)               
         })
-        .catch(err => {
+        .catch(() => {
             PubSub.publish("update-msg", ['err','Não foi encontrado nenhum cliente cadastrado com esse email e senha',true])          
         })
 	}

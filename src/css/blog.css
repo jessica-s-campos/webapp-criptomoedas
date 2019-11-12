@@ -82,6 +82,7 @@
   text-align: center;
 }
 .align-center{ 
+  justify-content: center;
   align-items: center;
 }
 
@@ -90,6 +91,10 @@
 }
 .margin-right-nav{
   margin-right: 15px;
+}
+
+.align-teste{
+  align-items: flex-end;
 }
 
 .margin-grid{
@@ -219,4 +224,4 @@
   .blog-footer p:last-child {
     margin-bottom: 0;
   }
-  
+   

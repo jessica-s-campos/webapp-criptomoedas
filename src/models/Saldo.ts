@@ -25,8 +25,11 @@ export default class Saldo{
         }).catch(err => console.log(err));
     }
 
-    ObterUltimoSaldo() : Promise<Saldo>{
-        return useIndexedDB('saldo').getAll().then((lista : Array<Saldo>) =>  lista[lista.length - 1]);
+    ObterUltimoSaldo(cliente_id : number) : Promise<Saldo>{
+        return useIndexedDB('saldo').getAll().then((lista : Array<Saldo>) =>  {
+            var list = lista.filter(o => o.cliente_id == cliente_id)           
+            return list[list.length - 1];
+        });
     }
        
 }
