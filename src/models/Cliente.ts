@@ -16,9 +16,13 @@ export default class Cliente{
     public Create() : number {           
         useIndexedDB('cliente').getAll()
         .then(lista => {
-
-            var _nextId = lista.reverse()[0].id + 1;
-            this.id = parseInt(_nextId);   
+            var _nextId = 1;
+            
+            if(lista.length > 0){
+               _nextId = lista.reverse()[0].id + 1;
+            }
+           
+            this.id = _nextId;   
                     
             useIndexedDB('cliente').add(this).then( o => {   
                   

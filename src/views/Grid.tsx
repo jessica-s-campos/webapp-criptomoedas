@@ -15,20 +15,35 @@ import FormControl from 'react-bootstrap/FormControl';
 
 class FiltroExtrato extends Component{
  
-    state = {data: new Date(1990,1,1,).toString() , operacao: Operacoes.Todas}
+    state = {data: new Date(1990,1,1,) , operacao: Operacoes.Todas}
 
     Filtra = (o:any) => {
         var valor = o.target.value;
+        var id = JSON.parse(localStorage.getItem('cliente') || '{}').id;
 
         if(isNaN(new Date(valor).getTime())){                  
             this.setState({operacao : valor});                      
-        }else{
-            this.setState({data : valor});        
+        }else{   
+            this.setState({data : new Date(valor)});        
         }
       
-        useIndexedDB('movimentacao').getAll().then( (mov:Array<Movimentacao>) => {
-            var array = mov.filter( o => new Date(o.data).getTime() >= new Date(this.state.data).getTime())
+        useIndexedDB('movimentacao').getAll().then( (movimentacoes : Array<Movimentacao>) => {
+            var array;
+           
+            if(this.state.operacao !== Operacoes.Todas)
+                array = movimentacoes
+                .filter( o => 
+                    o.data.getTime() >= this.state.data.getTime() 
+                    && o.cliente_id == id 
+                    && o.operacao == this.state.operacao)
 
+            else
+                array = movimentacoes
+                .filter( o => 
+                    o.data.getTime() >= this.state.data.getTime() 
+                    && o.cliente_id == id)
+
+            console.log('grid filtrado :',array)
             PubSub.publish("grid-filtrado", array) 
          });
     }
@@ -59,7 +74,7 @@ class FiltroExtrato extends Component{
 }
 
 class GridExtrato extends Component<{lista: Array<Movimentacao>}>{
-
+    condition : boolean = false;
     render() {
      
         return (
@@ -69,7 +84,7 @@ class GridExtrato extends Component<{lista: Array<Movimentacao>}>{
                     <tr>
                         <th>DATA</th>
                         <th>OPERAÇÃO</th>
-                        <th>MOEDA</th>
+                        <th>MOEDA</th>                       
                         <th>VALOR</th>
                     </tr>
                 </thead>
@@ -77,14 +92,20 @@ class GridExtrato extends Component<{lista: Array<Movimentacao>}>{
                 <tbody>
                     {
                         this.props.lista.map(function(m) 
-                        {                            
+                        {            
+                                       
                             return (
-                               
+                                
                                 <tr key={m.data.getMilliseconds()}>
                                 <td>{m.data.getDate()}/{m.data.getMonth() +1}/{m.data.getFullYear()}</td>
                                 <td>{m.operacao}</td>
-                                <td>{m.criptomoeda1 == Criptomoedas.Bitcoin ? "Bitcoin" : "Brita"}</td>
-                                <td>{m.criptomoeda2 == Criptomoedas.Brita ? "Brita" : "Bitcoins"}</td>
+                                {
+                                    m.operacao == Operacoes.Trocar 
+                                    ?
+                                    <td>{m.criptomoeda1 == Criptomoedas.Bitcoin ? "Bitcoin" : "Brita"} -> {m.criptomoeda2 == Criptomoedas.Brita ? "Brita" : "Bitcoins"}</td>                        
+                                    :
+                                    <td>{m.criptomoeda1 == Criptomoedas.Bitcoin ? "Bitcoin" : "Brita"}</td>                        
+                                }
                                 <td>{m.valor}</td>
                                 <script>
                                

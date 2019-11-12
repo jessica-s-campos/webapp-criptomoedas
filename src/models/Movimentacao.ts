@@ -49,7 +49,6 @@ export default class Movimentacao{
             .then(cli => {             
                 this.cliente = cli;
                 this.cliente.saldo = saldo;
-                console.log('ultimo saldo cliente',this.cliente.saldo)
 
                 if(this.operacao == Operacoes.Comprar){                   
                    this.Comprar();
