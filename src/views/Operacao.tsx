@@ -115,9 +115,9 @@ export class Operacao extends React.Component<{}, State>{
                     
                         <Form.Label>CriptoMoeda2</Form.Label>
                         <FormControl as="select" id="criptomoeda2"
-                        onChange={this.setCriptomoeda2.bind(this)}>
-                            <option value={Criptomoedas.Bitcoin} label={Criptomoedas.Bitcoin}></option>
-                            <option value={Criptomoedas.Brita} label={Criptomoedas.Brita}></option>          
+                        onChange={this.setCriptomoeda2.bind(this)}>                            
+                            <option value={Criptomoedas.Brita} label={Criptomoedas.Brita}></option>    
+                            <option value={Criptomoedas.Bitcoin} label={Criptomoedas.Bitcoin}></option>      
                         </FormControl>
                         <Form.Control.Feedback type="invalid">              
                         </Form.Control.Feedback>

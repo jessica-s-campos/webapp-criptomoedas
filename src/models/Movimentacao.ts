@@ -138,12 +138,17 @@ export default class Movimentacao{
                 console.log('_1RealEmBitcoins:', res)
 
                 total = this.valor * res;
-                this.cliente.saldo.dinheiro = this.cliente.saldo.dinheiro + this.valor;
-                this.cliente.saldo.bitcoins = this.cliente.saldo.bitcoins - total;
+                if(this.cliente.saldo.bitcoins >= total){
+                    this.cliente.saldo.dinheiro = this.cliente.saldo.dinheiro + this.valor;
+                    this.cliente.saldo.bitcoins = this.cliente.saldo.bitcoins - total;
 
-                this.ExibeInformacoes(total);        
-                this.AtualizaSaldo();
-                this.InsereMovimentecao();                    
+                    this.ExibeInformacoes(total);        
+                    this.AtualizaSaldo();
+                    this.InsereMovimentecao();  
+                }else{
+                    PubSub.publish("update-msg", ['err','Não há saldo de bitcoins suficiente para realizar a operação.',true])   
+                }
+                                 
             })                        
         }
 
@@ -152,12 +157,16 @@ export default class Movimentacao{
             _1RealEmBritas().then(res => {
                 console.log('_1RealEmBritas')
                 total = this.valor * res;
-                this.cliente.saldo.dinheiro = this.cliente.saldo.dinheiro + this.valor;
-                this.cliente.saldo.britas = this.cliente.saldo.britas - total;
-
-                this.ExibeInformacoes(total);        
-                this.AtualizaSaldo();
-                this.InsereMovimentecao();   
+                if(this.cliente.saldo.britas >= total){
+                    this.cliente.saldo.dinheiro = this.cliente.saldo.dinheiro + this.valor;
+                    this.cliente.saldo.britas = this.cliente.saldo.britas - total;
+    
+                    this.ExibeInformacoes(total);        
+                    this.AtualizaSaldo();
+                    this.InsereMovimentecao();   
+                }else{
+                    PubSub.publish("update-msg", ['err','Não há saldo de britas suficiente para realizar a operação.',true])   
+                }                
             })
             
         }
@@ -170,15 +179,33 @@ export default class Movimentacao{
            
             _1RealEmBritas().then(_mult_brita => {              
 
+                if(this.criptomoeda1 == this.criptomoeda2){
+                    PubSub.publish("update-msg", ['err','Não é possível realizar a operação de troca de criptomoedas iguais',true]);
+                    return;
+                }
                 //retirar
                 if(this.criptomoeda1 == Criptomoedas.Brita){
                     total = this.valor * _mult_brita;
-                    this.cliente.saldo.britas = this.cliente.saldo.britas - total;
+                    
+                    if(this.cliente.saldo.britas < total){
+                        PubSub.publish("update-msg", ['err','Não há saldo de britas suficiente para realizar a operação.',true]);
+                        return;
+                    }                        
+                    else{
+                        this.cliente.saldo.britas = this.cliente.saldo.britas - total;
+                    }                        
                 }else{
                     total = this.valor * _mult_bitcoin;
-                    this.cliente.saldo.bitcoins = this.cliente.saldo.bitcoins - total;
-                }
 
+                    if(this.cliente.saldo.bitcoins < total){
+                        PubSub.publish("update-msg", ['err','Não há saldo de bitcoins suficiente para realizar a operação.',true])   ;
+                        return;
+                    }                        
+                    else{
+                        this.cliente.saldo.bitcoins = this.cliente.saldo.bitcoins - total;
+                    }                        
+                }
+                
                 //aumentar
                 if(this.criptomoeda2 == Criptomoedas.Brita){
                     total = this.valor * _mult_brita;

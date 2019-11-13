@@ -1,6 +1,6 @@
 
  export const DBConfig = {
-    name: 'MyDB',
+    name: 'WebAppDesafio',
     version: 1,
     objectStoresMeta: [
       {
