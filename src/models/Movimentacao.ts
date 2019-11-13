@@ -152,6 +152,7 @@ export default class Movimentacao{
             })                        
         }
 
+        
         if(this.criptomoeda1 == Criptomoedas.Brita){
             
             _1RealEmBritas().then(res => {
