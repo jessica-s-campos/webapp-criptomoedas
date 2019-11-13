@@ -85,7 +85,7 @@ class GridExtrato extends Component<{lista: Array<Movimentacao>}>{
                         <th>DATA</th>
                         <th>OPERAÇÃO</th>
                         <th>MOEDA</th>                       
-                        <th>VALOR</th>
+                        <th>VALOR(R$)</th>
                     </tr>
                 </thead>
 

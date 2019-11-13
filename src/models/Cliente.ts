@@ -13,7 +13,8 @@ export default class Cliente{
         this.senha = senha;                
     }    
 
-    public Create() : number {           
+    public Create() : number {    
+       
         useIndexedDB('cliente').getAll()
         .then(lista => {
             var _nextId = 1;
@@ -24,22 +25,22 @@ export default class Cliente{
            
             this.id = _nextId;   
                     
-            useIndexedDB('cliente').add(this).then( o => {   
+            return useIndexedDB('cliente').add(this)
+            .then( o => {   
                   
                 if(o > 0){
                     this.saldo.cliente_id = o;
                     this.saldo.Create();     
                     
-                    PubSub.publish("update-msg", ['success','Cliente cadastrado com sucesso.',true]);
+                    PubSub.publish("update-msg", ['success','Cliente cadastrado com sucesso.',true]);                   
                     return o;
                 }           
             }).catch(err => {
                 PubSub.publish("update-msg", ['err','Houve algum problema ao cadastrar o cliente.',true]);          
                 console.log(err);
-            });
+                
+            });     
         })
-
-       
         return 0;
     }  
   

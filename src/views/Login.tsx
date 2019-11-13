@@ -41,8 +41,8 @@ class CadastroCliente extends Component<{},ICliente> {
     }
 
 	Adiciona = () => {
-        var cliente = new Cliente(this.state.nome, this.state.email, this.state.senha);
-        cliente.Create();
+        var cliente = new Cliente(this.state.nome, this.state.email, this.state.senha);        
+        cliente.Create();        
 	}
 
 	render(){

@@ -56,15 +56,15 @@ export class SaldoView extends React.Component<any, IState>{
 
                 <Row className="txt-center">
                     <Col md="4">               
-                        <label className="blog-header-logo" id="saldo-dinheiro">{this.state.saldo_dinheiro}</label>
+                        <label className="blog-header-logo" id="saldo-dinheiro">R$ {this.state.saldo_dinheiro.toFixed(2)}</label>
                     </Col>
 
                     <Col md="4">                       
-                        <label className="blog-header-logo" id="saldo-bitcoins">{this.state.saldo_bitcoin}</label>       
+                        <label className="blog-header-logo" id="saldo-bitcoins">{this.state.saldo_bitcoin.toFixed(7)}</label>       
                     </Col>
                     
                     <Col md="4">           
-                        <label className="blog-header-logo" id="saldo-britas">{this.state.saldo_brita}</label>               
+                        <label className="blog-header-logo" id="saldo-britas">{this.state.saldo_brita.toFixed(7)}</label>               
                     </Col>
             
                 </Row>
