@@ -105,7 +105,11 @@ class Login extends Component<{},ILogin> {
         new Cliente('',this.state.email, this.state.senha)
         .Logar()
         .then((cliente : Cliente) => {   
-            PubSub.publish("login-autorizado", cliente)               
+            if(cliente)
+                PubSub.publish("login-autorizado", cliente) 
+            else
+            PubSub.publish("update-msg", ['err','Não foi encontrado nenhum cliente cadastrado com esse email e senha',true])  
+                         
         })
         .catch(() => {
             PubSub.publish("update-msg", ['err','Não foi encontrado nenhum cliente cadastrado com esse email e senha',true])          
@@ -119,7 +123,7 @@ class Login extends Component<{},ILogin> {
                 <Header titulo="Login"></Header>          
                     <Col md="12">
                         <label htmlFor="login-email">E-mail</label>
-                        <input className="form-control font-valores" type="email" id="login-email" value={this.state.email} onChange={this.setEmail.bind(this)}/>
+                        <input className="form-control font-valores" type="email" placeholder="seuemail@dominio.com.br" id="login-email" value={this.state.email} onChange={this.setEmail.bind(this)}/>
                     </Col>
                     
                     <Col md="12">
@@ -161,9 +165,13 @@ export default class LoginBox extends React.Component {
                                 </div>
                                 
                                 <div className="col-md-6">
-                                    <Login/>                         
+                                    <Login/> 
+
                                 </div>                                                                    
-                                <Mensagem/>                         
+
+                                <div className="col-md-12">
+                                    <Mensagem/> 
+                                </div>                    
                             </Row>     
                                               
                     </div>
