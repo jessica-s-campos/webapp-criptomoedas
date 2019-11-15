@@ -163,7 +163,7 @@ nav > div:nth-child(2){
 } 
 
 nav > div:nth-child(3){
-  width: 12.5%;
+  width: 25%;
   text-align: left;
 }
 
@@ -188,15 +188,8 @@ nav > div:nth-child(3){
   font-size: 16px;
 }
 
-@media screen and (max-width:450){
-
-  .painel{
-    display: flex;
-    flex-direction:column;
-    flex-wrap: wrap;
-  }
-  .saldo-margin{
-    margin-top:5px;
-    margin-bottom:5px;
+@media screen and (min-width:414){
+  .body{
+    width: 20%;
   }
 }
