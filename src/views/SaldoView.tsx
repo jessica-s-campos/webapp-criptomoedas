@@ -2,7 +2,7 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import '../css/blog.css'
+import '../css/style.css'
 import PubSub from 'pubsub-js'; 
 import Saldo from '../models/Saldo';
 
@@ -33,43 +33,27 @@ export class SaldoView extends React.Component<any, IState>{
     ObterUltimoSaldo(){       
         new Saldo().ObterUltimoSaldo(_id).then( s => {
             this.setState({saldo_bitcoin : s.bitcoins, saldo_brita : s.britas, saldo_dinheiro : s.dinheiro});
-        })                 
+        })                   
     }
 
     render() {
-        return <div  className="blog-header">           
-            <div className="margin-saldo">           
-                <Row className="txt-center">
-                    <Col md="4">
-                        <label className="blog-header-logo">Dinheiro Disponível</label>                
-                    </Col>
+        return <div className="saldo-painel">
+                    <div className="saldo-item"> 
+                        <label>Dinheiro</label>      
+                        <label className="saldo-valores" id="saldo-dinheiro">R$ {this.state.saldo_dinheiro.toFixed(2)}</label>          
+                    </div>
 
-                    <Col md="4">            
-                        <label className="blog-header-logo">Bitcoins</label>                
-                    </Col>
+                    <div className="saldo-item">            
+                        <label>Bitcoins</label>         
+                        <label className="saldo-valores" id="saldo-bitcoins">{this.state.saldo_bitcoin.toFixed(7)}</label>              
+                    </div>
                     
-                    <Col md="4">           
-                        <label className="blog-header-logo">Britas</label>                         
-                    </Col>
-                    
-                </Row>
-
-                <Row className="txt-center">
-                    <Col md="4">               
-                        <label className="blog-header-logo" id="saldo-dinheiro">R$ {this.state.saldo_dinheiro.toFixed(2)}</label>
-                    </Col>
-
-                    <Col md="4">                       
-                        <label className="blog-header-logo" id="saldo-bitcoins">{this.state.saldo_bitcoin.toFixed(7)}</label>       
-                    </Col>
-                    
-                    <Col md="4">           
-                        <label className="blog-header-logo" id="saldo-britas">{this.state.saldo_brita.toFixed(7)}</label>               
-                    </Col>
-            
-                </Row>
-            </div>
-        </div>
+                    <div className="saldo-item">           
+                        <label>Britas</label>   
+                        <label id="saldo-britas">{this.state.saldo_brita.toFixed(7)}</label>                          
+                    </div>                    
+                </div>            
+        
             
     }
 

@@ -5,11 +5,12 @@ import Table from 'react-bootstrap/Table';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import '../css/blog.css';
+import '../css/style.css';
 import PubSub from 'pubsub-js'; 
 import { useIndexedDB } from 'react-indexed-db';
 import { Criptomoedas, Operacoes } from '../models/Tipos';
 import FormControl from 'react-bootstrap/FormControl';
+import Container from 'react-bootstrap/Container';
 
 
 
@@ -53,12 +54,12 @@ class FiltroExtrato extends Component{
             
             <Col md="6">
                 <label>Data</label>
-                <input className="form-control" type="date" onChange={this.Filtra.bind(this)}/> 
+                <input className="form-control font-valores" type="date" onChange={this.Filtra.bind(this)}/> 
             </Col>
 
             <Col md="6">
                 <Form.Label>Operação</Form.Label>
-                <FormControl as="select" id="operacao" value={this.state.operacao} onChange={this.Filtra.bind(this)}>
+                <FormControl className=" font-valores" as="select" id="operacao" value={this.state.operacao} onChange={this.Filtra.bind(this)}>
                     <option value={Operacoes.Todas}>{Operacoes.Todas}</option>
                     <option value={Operacoes.Comprar}>{Operacoes.Comprar}</option>
                     <option value={Operacoes.Vender} >{Operacoes.Vender}</option>
@@ -79,8 +80,8 @@ class GridExtrato extends Component<{lista: Array<Movimentacao>}>{
      
         return (
             <div>
-                <Table id="grid1" className="striped bordered hover margin-grid">
-                <thead>
+                <Table className="striped bordered hover grid">
+                <thead className="grid-cabecalho">
                     <tr>
                         <th>DATA</th>
                         <th>OPERAÇÃO</th>
@@ -89,7 +90,7 @@ class GridExtrato extends Component<{lista: Array<Movimentacao>}>{
                     </tr>
                 </thead>
 
-                <tbody>
+                <tbody className="grid-linhas" > 
                     {
                         this.props.lista.map(function(m) 
                         {            
@@ -115,10 +116,6 @@ class GridExtrato extends Component<{lista: Array<Movimentacao>}>{
                         })  
                     }          
                 </tbody>
-
-                <tfoot>
-                   
-                </tfoot>
             </Table>  
             
             </div>
@@ -160,10 +157,12 @@ export default class GridBox extends React.Component<any, IState>{
 
     render() {
         return (
+            <Container>
             <div className="header">
             <FiltroExtrato/> 
             <GridExtrato lista={this.state.extrato}/> 
             </div>
+            </Container>
         )
     }
 

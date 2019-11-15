@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import './css/blog.css'
+import './css/style.css'
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
@@ -18,24 +18,23 @@ class App extends React.Component<{nome : string}>  {
   render(){
     return (
       <div>                        
-        <Navbar className="border-divisor-bottom bg-light">
+        <Navbar className="divisor-bottom bg-light">
          
-            <div className="margin-right-nav">
+            <div>
               <img src={logoApp} width="40" height="40" alt=""/>
             </div>
+            
+            <div>WebApp Desafio</div>
+            <div>Olá {this.props.nome} !</div>  
 
-            <ul className="navbar-nav mr-auto">
-              <li className="nav-item active"><Link to="/" className="nav-link">Home</Link></li>
-              <li className="nav-item"><Link to="/" onClick={this.RemoveLogged} className="nav-link">Sair</Link></li>          
-            </ul>        
-          
-            <div className="align-teste">
-              Olá {this.props.nome}!
-            </div>
+            <div>
+            <Link to="/" onClick={this.RemoveLogged} className="nav-link">Sair</Link>      
+            </div>         
+        
         </Navbar>                         
-        <Container>
+       
           {this.props.children}
-        </Container>        
+          
       </div>
     );
   }

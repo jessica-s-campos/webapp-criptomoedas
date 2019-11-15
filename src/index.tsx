@@ -12,6 +12,7 @@ import LoginBox from './views/Login';
 import Home from './views/Home';
 import Cliente from './models/Cliente';
 
+
 initDB(DBConfig);
 
 const customHistory = createBrowserHistory();
@@ -25,17 +26,19 @@ PubSub.subscribe('login-autorizado',(topis: any, cliente : Cliente) => {
 
 if(!localStorage.getItem('cliente')){
     ReactDOM.render((<Router history={customHistory}>
-        <div>     
+        <main>     
             <LoginBox/>                    
-        </div>
+        </main>
     </Router>), document.getElementById('root'));
 }else{
     nome_cliente_logado = JSON.parse(localStorage.getItem('cliente') || '{}').nome;;   
 
-    ReactDOM.render((<Router history={customHistory}>                                         
+    ReactDOM.render((<Router history={customHistory}>     
+    <main>                             
        <App nome={nome_cliente_logado}> 
            <Home/>
-       </App>                  
+       </App>    
+    </main>                     
     </Router>), document.getElementById('root'));
 }
 

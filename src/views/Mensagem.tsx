@@ -1,6 +1,6 @@
 import React, { Component } from 'react'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../css/blog.css'
+import '../css/style.css'
 import Container from 'react-bootstrap/Container';
 
 export class Mensagem extends Component<{},{tipo : string, mensagem : string, show : boolean}>{
@@ -21,17 +21,17 @@ export class Mensagem extends Component<{},{tipo : string, mensagem : string, sh
     }
 
     render() {
-        return <Container className="txt-align">               
+        return <div className="mensagem">               
             {
                 this.state.tipo == "success"
                 ? 
-                    <label className="success-msg">{this.state.mensagem}</label> 
+                    <label className="mensagem-sucesso">{this.state.mensagem}</label> 
                 :
-                    <label className="err-msg">{this.state.mensagem}</label>                 
+                    <label className="mensagem-erro">{this.state.mensagem}</label>                 
             }
            
           
-        </Container>        
+        </div>        
     }
 
 }

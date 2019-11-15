@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
-import '../css/blog.css'
+import '../css/style.css'
 import { Header } from './Header';
 import Cliente  from '../models/Cliente';
 import { Mensagem } from './Mensagem';
@@ -42,37 +42,33 @@ class CadastroCliente extends Component<{},ICliente> {
 
 	Adiciona = () => {
         var cliente = new Cliente(this.state.nome, this.state.email, this.state.senha);        
-        cliente.Create();        
-	}
-
+        cliente.Create();    
+        this.setState({ nome: '', email: '', senha: ''});    
+    }
+       
 	render(){
 		return (<Container>
                 
                 <div>
                 <Header titulo="Cadastro"></Header>   
                     <Col md="12">
-                        <Form.Label>Nome</Form.Label>
-                        <input className="form-control" type="text" id="nome" value={this.state.nome} onChange={this.setNome.bind(this)}/>
+                        <label htmlFor="nome">Nome</label>
+                        <input className="form-control font-valores" type="text" id="nome" value={this.state.nome} onChange={this.setNome.bind(this)}/>
                     </Col>
                 
                     <Col md="12">
-                        <Form.Label>E-mail</Form.Label>
-                        <input className="form-control"  type="email" id="email" value={this.state.email} onChange={this.setEmail.bind(this)}/>
+                        <label htmlFor="senha">E-mail</label>
+                        <input className="form-control font-valores"  placeholder="seuemail@dominio.com.br" type="email" id="email" value={this.state.email} onChange={this.setEmail.bind(this)}/>
                     </Col>                
                 
-                <Col md="12">
-                        <Form.Label>Senha</Form.Label>
-                        <input className="form-control" type="password" id="senha" value={this.state.senha} onChange={this.setSenha.bind(this)}/>
-                    </Col>
-                
                     <Col md="12">
-                        <Form.Label>Confirme a Senha</Form.Label>
-                        <input className="form-control" type="password" id="confirma-senha"/>
-                    </Col>
+                        <label htmlFor="senha">Senha</label>
+                        <input className="form-control font-valores" type="password" id="senha" value={this.state.senha} onChange={this.setSenha.bind(this)}/>
+                    </Col>            
             
                             
-                    <Col md="12" className="margin-button">
-                        <Button variant="success" id="btn-ok" onClick={this.Adiciona}>Cadastrar</Button>
+                    <Col md="12" className="botao-padrao">
+                        <Button variant="success"onClick={this.Adiciona}>Cadastrar</Button>
                     </Col>
                 </div>
             </Container> 
@@ -122,17 +118,17 @@ class Login extends Component<{},ILogin> {
                 <div>   
                 <Header titulo="Login"></Header>          
                     <Col md="12">
-                        <Form.Label>E-mail</Form.Label>
-                        <input className="form-control" type="email" id="email" value={this.state.email} onChange={this.setEmail.bind(this)}/>
+                        <label htmlFor="login-email">E-mail</label>
+                        <input className="form-control font-valores" type="email" id="login-email" value={this.state.email} onChange={this.setEmail.bind(this)}/>
                     </Col>
                     
                     <Col md="12">
-                        <Form.Label>Senha</Form.Label>
-                        <input className="form-control" type="password" id="senha" value={this.state.senha} onChange={this.setSenha.bind(this)}/>
+                        <label htmlFor="login-senha">Senha</label>
+                        <input className="form-control font-valores" type="password" id="login-senha" value={this.state.senha} onChange={this.setSenha.bind(this)}/>
                     </Col>
                             
-                    <Col md="12" className="margin-button">
-                        <Button variant="success" id="btn-ok" onClick={this.Entrar}>Entrar</Button>
+                    <Col md="12" className="botao-padrao">
+                        <Button variant="success" onClick={this.Entrar}>Entrar</Button>
                     </Col>
                 
                </div>
@@ -150,21 +146,23 @@ export default class LoginBox extends React.Component {
     
     render() {
         return (<div>
-            <div className="container-b">
-                            
-                            <Row className="box-b">
-                                    <div className="col-md-12 align-logo-login">
-                                        <img src={logoApp} width="100" height="100" alt=""/>
+            <div className="login">                            
+                            <Row>
+                                <div className="col-md-12 login-logo">
+                                    
+                                    <div>
+                                    <img src={logoApp} width="100" height="100" alt=""/>
+                                        WebApp Desafio
                                     </div>
-                                    <div className="col-md-6">
-                                        <CadastroCliente/>                        
-                                    </div>
-                                 
-                                    <div className="col-md-6">
-                                        <Login/>                         
-                                    </div>    
-                               
-                                 
+                                </div>
+
+                                <div className="col-md-6">
+                                    <CadastroCliente/>                        
+                                </div>
+                                
+                                <div className="col-md-6">
+                                    <Login/>                         
+                                </div>                                                                    
                                 <Mensagem/>                         
                             </Row>     
                                               

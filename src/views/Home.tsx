@@ -13,42 +13,38 @@ export default class Home extends Component{
     
     render() {
         return (
-            <div>
-           
-              
-                <Header titulo="WebApp Desafio"></Header>
-             
-   
-                <SaldoView/>   
-            
-               
+            <div className="painel">
+                <div className="col-md-2">
+                 <SaldoView/>   
+                </div>
+                <div className="col-md-10">                          
+ 
+                    <Row>
+                        <div className="col-md-4">
+                            <Header titulo="Movimentação"></Header>
+                        </div>
+                        <div className=""></div>
+                        <div className="col-md-8">
+                            <Header titulo="Extrato"></Header>
+                        </div>                   
+                    </Row>
                     
-                <Row>
-                    <div className="col-md-4">
-                        <Header titulo="Movimentação"></Header>
-                    </div>
-                    <div className=""></div>
-                    <div className="col-md-8">
-                        <Header titulo="Extrato"></Header>
-                    </div>                   
-                </Row>
-                
-                <Row>
-                    <div className="col-md-4">
-                        <Operacao/>
-                        
-                        <Mensagem/>                    
-                    </div>  
-                    <div className="border-divisor-split"></div>
-                    <div className="col-md-7">                       
-                        <GridBox/>                     
-                    </div>
-                </Row>
+                    <Row>
+                        <div className="col-md-4">
+                            <Operacao/>                        
+                            <Mensagem/>          
+                        </div>  
+                    
+                        <div className="col-md-7">                       
+                            <GridBox/>                     
+                        </div>
+
+                           
+                    </Row>
                
              
-            </div>
-      
-           
+                </div>
+            </div>                 
         )
     }
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../css/blog.css'
+import '../css/style.css'
 
 export class Data extends Component<{data : Date}>{
     

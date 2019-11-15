@@ -81,7 +81,7 @@ export class Operacao extends React.Component<{}, State>{
            
             <Col md="12">
                 <Form.Label>Operação</Form.Label>
-                <FormControl as="select" id="operacao" value={this.state.operacao} onChange={this.setOperacao.bind(this)}>
+                <FormControl  className="font-valores" as="select" id="operacao" value={this.state.operacao} onChange={this.setOperacao.bind(this)}>
                     <option value={Operacoes.Comprar}>{Operacoes.Comprar}</option>
                     <option value={Operacoes.Vender} >{Operacoes.Vender}</option>
                     <option value={Operacoes.Trocar} >{Operacoes.Trocar}</option>         
@@ -92,7 +92,7 @@ export class Operacao extends React.Component<{}, State>{
 
             <Col md="12">
             <Form.Label>Valor</Form.Label>
-            <InputGroup>
+            <InputGroup className="font-valores">
                 <InputGroup.Prepend>
                     <InputGroup.Text>R$</InputGroup.Text>
                 </InputGroup.Prepend>
@@ -105,16 +105,16 @@ export class Operacao extends React.Component<{}, State>{
             {this.condition
             ? 
                     <Col md="12">
-                        <Form.Label>CriptoMoeda1</Form.Label>                
-                        <FormControl as="select" id="criptomoeda1" onChange={this.setCriptomoeda1.bind(this)}>
+                        <Form.Label>CriptoMoeda 1</Form.Label>                
+                        <FormControl  className="font-valores" as="select" id="criptomoeda1" onChange={this.setCriptomoeda1.bind(this)}>
                             <option value={Criptomoedas.Bitcoin} label={Criptomoedas.Bitcoin}></option>
                             <option value={Criptomoedas.Brita} label={Criptomoedas.Brita}></option>               
                         </FormControl>
                         <Form.Control.Feedback type="invalid">              
                         </Form.Control.Feedback>
                     
-                        <Form.Label>CriptoMoeda2</Form.Label>
-                        <FormControl as="select" id="criptomoeda2"
+                        <Form.Label>CriptoMoeda 2</Form.Label>
+                        <FormControl  className="font-valores" as="select" id="criptomoeda2"
                         onChange={this.setCriptomoeda2.bind(this)}>                            
                             <option value={Criptomoedas.Brita} label={Criptomoedas.Brita}></option>    
                             <option value={Criptomoedas.Bitcoin} label={Criptomoedas.Bitcoin}></option>      
@@ -125,8 +125,8 @@ export class Operacao extends React.Component<{}, State>{
                 
             : 
                 <Col md="12">
-                    <Form.Label>CriptoMoeda1</Form.Label>                
-                    <FormControl as="select" id="criptomoeda1" onChange={this.setCriptomoeda1.bind(this)}>
+                    <Form.Label>CriptoMoeda</Form.Label>                
+                    <FormControl  className="font-valores" as="select" id="criptomoeda1" onChange={this.setCriptomoeda1.bind(this)}>
                         <option value={Criptomoedas.Bitcoin} label={Criptomoedas.Bitcoin}></option>
                         <option value={Criptomoedas.Brita} label={Criptomoedas.Brita}></option>               
                     </FormControl>
@@ -138,8 +138,8 @@ export class Operacao extends React.Component<{}, State>{
         
            
            
-            <Col md="12" className="margin-button">
-                <Button variant="success" id="btn-ok" onClick={this.Adiciona}>OK</Button>
+            <Col md="12" className="botao-padrao">
+                <Button variant="success" onClick={this.Adiciona}>OK</Button>
             </Col>
             
             </Row>

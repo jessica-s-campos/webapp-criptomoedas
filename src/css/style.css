@@ -1,0 +1,202 @@
+
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Playfair Display Regular'), local('PlayfairDisplay-Regular'), url(https://fonts.gstatic.com/s/playfairdisplay/v15/nuFiD-vYSZviVYUb_rj3ij__anPXDTzYgA.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Slabo 27px';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Slabo 27px'), local('Slabo27px-Regular'), url(https://fonts.gstatic.com/s/slabo27px/v6/mFT0WbgBwKPR_Z4hGN2qgx8D1Q.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Roboto Condensed';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: local('Roboto Condensed Light'), local('RobotoCondensed-Light'), url(https://fonts.gstatic.com/s/robotocondensed/v18/ieVi2ZhZI2eCN5jzbjEETS9weq8-33mZGCQYbw.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Roboto'), local('Roboto-Regular'), url(https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu4mxK.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+main{
+  font-family: 'Playfair Display', serif;
+}
+
+.mensagem-sucesso{
+  color: green;
+}
+
+.mensagem-erro{
+  color: red; 
+}
+
+.mensagem{
+  margin-top: 40px;
+  text-align: right;  
+  font-family: 'Roboto', sans-serif;
+}
+
+
+.painel{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.saldo {
+  text-align: center;
+  line-height: 1;
+}
+
+.saldo-painel{
+  margin-top: 20%;  
+  
+}
+
+.saldo-painel > div:nth-child(1){
+  border-right:2px dotted orange; 
+  border-left:2px dotted orange; 
+}
+
+.saldo-painel > div:nth-child(2){
+  border-right:2px dotted #2AD1E3; 
+  border-left:2px dotted #2AD1E3; 
+}
+
+.saldo-painel > div:nth-child(3){
+  border-right:2px dotted gray; 
+  border-left:2px dotted gray; 
+}
+
+.saldo-item{ 
+  margin-left: 10%;
+  margin-top: 20%;  
+
+  padding: 10% 10% 20px 10px;
+  height: 100%;    
+  border-radius: 5px;
+}
+
+.saldo-item > label:first-child{ 
+  margin-left: 10%;
+  font-family: 'Slabo 27px', serif;
+  letter-spacing: 0.30rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  text-align: left;
+  font-size: 14px;
+  width: 100%;
+}
+
+.saldo-item > label:last-child{ 
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 20px;
+  text-align: right;
+  line-height: 0.5; 
+  width: 100%;
+}
+
+
+.saldo-margin{
+  margin-top:20px;
+  margin-bottom:20px;
+}
+
+.login{
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center
+  
+}
+
+.login > div {
+  width: 800px;
+  height: 500px ;    
+  align-items: center
+}
+
+.login-logo {
+  display: inline;
+  text-align: center;
+  font-size: 24px;
+}
+
+.botao-padrao{
+  margin-top:20px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.cabecalho-titulo{
+  color: orangered;  
+  font-size: 18px;
+  text-align: center; 
+}
+
+nav{    
+  border-bottom:1px solid orangered; 
+}
+
+nav > div:nth-child(2){
+  width: 100%;
+  text-align: left;
+  font-size: 20px;
+} 
+
+nav > div:nth-child(3){
+  width: 12.5%;
+  text-align: left;
+}
+
+.grid{
+  margin-top:20px;
+}
+
+.grid-cabecalho{
+  font-family: 'Slabo 27px', serif;
+  letter-spacing: 0.25rem;
+  text-align: center;
+}
+
+.grid-linhas{
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+}
+
+.font-valores{
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+}
+
+@media screen and (max-width:450){
+
+  .painel{
+    display: flex;
+    flex-direction:column;
+    flex-wrap: wrap;
+  }
+  .saldo-margin{
+    margin-top:5px;
+    margin-bottom:5px;
+  }
+}
