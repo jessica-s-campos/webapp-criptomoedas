@@ -101,10 +101,9 @@ export default class Movimentacao{
                 
                 _1RealEmBitcoins().then(res => {
                     console.log('_1RealEmBitcoins:', res)                               
-                    total = this.valor * res;
-                    this.cliente.saldo.dinheiro = this.cliente.saldo.dinheiro - this.valor;
-                    this.cliente.saldo.bitcoins = this.cliente.saldo.bitcoins + total;
-                                                    
+                    total = this.valor * res;                    
+                    this.cliente.saldo.dinheiro = this.cliente.saldo.dinheiro - this.valor;     
+                    this.cliente.saldo.bitcoins = this.cliente.saldo.bitcoins + total;                                                    
                     this.ExibeInformacoes(total);
                     this.AtualizaSaldo();
                     this.InsereMovimentecao();
@@ -139,9 +138,10 @@ export default class Movimentacao{
 
                 total = this.valor * res;
                 if(this.cliente.saldo.bitcoins >= total){
+                    console.log('valor tipo ',typeof(this.valor))
                     this.cliente.saldo.dinheiro = this.cliente.saldo.dinheiro + this.valor;
-                    this.cliente.saldo.bitcoins = this.cliente.saldo.bitcoins - total;
-
+                    console.log('depois ',typeof(this.cliente.saldo.dinheiro))
+                    this.cliente.saldo.bitcoins = this.cliente.saldo.bitcoins - total;                  
                     this.ExibeInformacoes(total);        
                     this.AtualizaSaldo();
                     this.InsereMovimentecao();  

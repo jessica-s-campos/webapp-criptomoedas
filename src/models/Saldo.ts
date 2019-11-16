@@ -10,11 +10,13 @@ export default class Saldo{
     constructor(_dinheiro : number = 0, _britas : number = 0, _bitcoins : number = 0){
         this.dinheiro = _dinheiro;                 
         this.britas = _britas;                 
-        this.bitcoins = _bitcoins;                 
+        this.bitcoins = _bitcoins;
     }    
 
 
-    Create() { 
+    Create() {         
+        console.log(this.bitcoins)
+        console.log(this.bitcoins.toFixed(7))
         useIndexedDB('saldo').add(this)
         .then( id => {
             if(id > 0)

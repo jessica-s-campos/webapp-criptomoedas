@@ -66,7 +66,7 @@ export class Operacao extends React.Component<{}, State>{
             alert('Valor não pode ser negativo')
              
         } else{
-            this.setState({valor : o.target.value}); 
+            this.setState({valor : parseFloat(o.target.value)}); 
         }             
     }
 
